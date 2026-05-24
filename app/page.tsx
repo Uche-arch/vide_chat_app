@@ -131,23 +131,51 @@ export default function Home() {
   async function createPeerConnection(partner: string) {
     cleanupConnection();
 
+    // const pc = new RTCPeerConnection({
+    //   iceServers: [
+    //     {
+    //       urls: "stun:stun.l.google.com:19302",
+    //     },
+    //     {
+    //       urls: "turn:openrelay.metered.ca:80",
+    //       username: "openrelayproject",
+    //       credential: "openrelayproject",
+    //     },
+    //     {
+    //       urls: "turn:openrelay.metered.ca:443",
+    //       username: "openrelayproject",
+    //       credential: "openrelayproject",
+    //     },
+    //   ],
+    // });
+
     const pc = new RTCPeerConnection({
       iceServers: [
         {
           urls: "stun:stun.l.google.com:19302",
         },
+
         {
-          urls: "turn:openrelay.metered.ca:80",
-          username: "openrelayproject",
-          credential: "openrelayproject",
-        },
-        {
-          urls: "turn:openrelay.metered.ca:443",
+          urls: [
+            "turn:openrelay.metered.ca:80",
+            "turn:openrelay.metered.ca:443",
+            "turn:openrelay.metered.ca:443?transport=tcp",
+          ],
           username: "openrelayproject",
           credential: "openrelayproject",
         },
       ],
+
+      iceTransportPolicy: "all",
     });
+
+    pc.oniceconnectionstatechange = () => {
+      console.log("ICE STATE:", pc.iceConnectionState);
+    };
+
+    pc.onconnectionstatechange = () => {
+      console.log("CONNECTION STATE:", pc.connectionState);
+    };
 
     peerConnection.current = pc;
 
