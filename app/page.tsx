@@ -136,6 +136,16 @@ export default function Home() {
         {
           urls: "stun:stun.l.google.com:19302",
         },
+        {
+          urls: "turn:openrelay.metered.ca:80",
+          username: "openrelayproject",
+          credential: "openrelayproject",
+        },
+        {
+          urls: "turn:openrelay.metered.ca:443",
+          username: "openrelayproject",
+          credential: "openrelayproject",
+        },
       ],
     });
 
@@ -249,6 +259,7 @@ export default function Home() {
               ref={remoteVideo}
               autoPlay
               playsInline
+              muted={false}
               className="h-[260px] md:h-[500px] w-full object-cover"
             />
 
