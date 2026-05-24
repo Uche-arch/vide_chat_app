@@ -6,13 +6,12 @@ import { io } from "socket.io-client";
 // const socket = io();
 // const socket = io("https://video-chat-server-b3zd.onrender.com/");
 
-const socket = io("https://video-chat-server-b3zd.onrender.com", {
-  transports: ["websocket"],
-});
-
-// const socket = io("https://video-chat-server-rs7f.onrender.com", {
+// const socket = io("https://video-chat-server-b3zd.onrender.com", {
 //   transports: ["websocket"],
 // });
+
+const socket = io("https://video-chat-server-b3zd.onrender.com");
+
 
 export default function Home() {
   const localVideo = useRef<HTMLVideoElement>(null);
