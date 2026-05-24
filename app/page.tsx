@@ -152,17 +152,31 @@ export default function Home() {
     const pc = new RTCPeerConnection({
       iceServers: [
         {
-          urls: "stun:stun.l.google.com:19302",
+          urls: "stun:stun.relay.metered.ca:80",
         },
 
         {
-          urls: [
-            "turn:openrelay.metered.ca:80",
-            "turn:openrelay.metered.ca:443",
-            "turn:openrelay.metered.ca:443?transport=tcp",
-          ],
-          username: "openrelayproject",
-          credential: "openrelayproject",
+          urls: "turn:global.relay.metered.ca:80",
+          username: "a5a42f645ba0512bed56761a",
+          credential: "o1LXCnRP7WhB0p2J",
+        },
+
+        {
+          urls: "turn:global.relay.metered.ca:80?transport=tcp",
+          username: "a5a42f645ba0512bed56761a",
+          credential: "o1LXCnRP7WhB0p2J",
+        },
+
+        {
+          urls: "turn:global.relay.metered.ca:443",
+          username: "a5a42f645ba0512bed56761a",
+          credential: "o1LXCnRP7WhB0p2J",
+        },
+
+        {
+          urls: "turns:global.relay.metered.ca:443?transport=tcp",
+          username: "a5a42f645ba0512bed56761a",
+          credential: "o1LXCnRP7WhB0p2J",
         },
       ],
 
