@@ -2,16 +2,16 @@
 
 // // import { useEffect, useRef, useState } from "react";
 // // import { io } from "socket.io-client";
-// // import { 
-// //   Video, 
-// //   VideoOff, 
-// //   Mic, 
-// //   MicOff, 
-// //   PhoneOff, 
-// //   ArrowRight, 
-// //   Search, 
-// //   Circle, 
-// //   User, 
+// // import {
+// //   Video,
+// //   VideoOff,
+// //   Mic,
+// //   MicOff,
+// //   PhoneOff,
+// //   ArrowRight,
+// //   Search,
+// //   Circle,
+// //   User,
 // //   ShieldAlert,
 // //   Sparkles,
 // //   Loader2
@@ -191,7 +191,7 @@
 
 // //   return (
 // //     <div className="flex flex-col h-screen bg-neutral-950 text-neutral-100 font-sans overflow-hidden antialiased">
-      
+
 // //       {/* Top Navigation / Header */}
 // //       <header className="flex items-center justify-between px-6 py-4 border-b border-neutral-900 bg-neutral-950/80 backdrop-blur-md z-10">
 // //         <div className="flex items-center gap-3">
@@ -207,7 +207,7 @@
 // //             <Circle className="w-2 h-2 fill-emerald-500 text-emerald-500" />
 // //             <span>{onlineCount.toLocaleString()} peers online</span>
 // //           </div>
-          
+
 // //           <div>
 // //             {!isConnected && !isSearching && (
 // //               <span className="text-xs font-medium uppercase tracking-wider text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded border border-neutral-800">Idle</span>
@@ -224,7 +224,7 @@
 
 // //       {/* Main Viewport Grid */}
 // //       <main className="flex-1 relative p-4 max-w-7xl w-full mx-auto flex flex-col md:block">
-        
+
 // //         {/* 1. Immersive Stranger View */}
 // //         <div className="w-full h-full rounded-2xl bg-neutral-900 border border-neutral-800 overflow-hidden flex items-center justify-center relative shadow-2xl transition-all duration-300">
 // //           <video
@@ -250,17 +250,17 @@
 // //                 {isSearching ? "Searching the Grid..." : "Ready to Connect?"}
 // //               </h3>
 // //               <p className="text-neutral-400 text-sm max-w-xs leading-relaxed">
-// //                 {isSearching 
-// //                   ? "Hang tight, matching you with another active user on campus right now." 
+// //                 {isSearching
+// //                   ? "Hang tight, matching you with another active user on campus right now."
 // //                   : "Click find stranger below to establish an instant connection."}
 // //               </p>
 // //             </div>
 // //           )}
-          
+
 // //           <div className="absolute top-4 left-4 z-20 bg-neutral-950/80 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-neutral-800 text-xs font-medium tracking-wide">
 // //             Stranger
 // //           </div>
-          
+
 // //           {/* Subtle Session Monitor Badge Inside Video */}
 // //           <div className="absolute top-4 right-4 z-20 hidden md:block max-w-xs bg-neutral-950/50 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-neutral-800/60 text-[11px] font-mono text-neutral-400">
 // //             {status}
@@ -269,12 +269,12 @@
 
 // //         {/* 2. Floating Local Preview Corner (You) */}
 // //         <div className="
-// //           mt-4 md:mt-0 
-// //           w-full md:w-64 md:h-44 
-// //           aspect-video md:aspect-auto 
-// //           md:absolute md:bottom-8 md:right-8 
-// //           rounded-xl overflow-hidden 
-// //           bg-neutral-950 border-2 border-neutral-800 
+// //           mt-4 md:mt-0
+// //           w-full md:w-64 md:h-44
+// //           aspect-video md:aspect-auto
+// //           md:absolute md:bottom-8 md:right-8
+// //           rounded-xl overflow-hidden
+// //           bg-neutral-950 border-2 border-neutral-800
 // //           shadow-2xl transition-all duration-300 z-30 flex items-center justify-center
 // //         ">
 // //           <video
@@ -284,14 +284,14 @@
 // //             playsInline
 // //             className="h-full w-full object-cover scale-x-[-1]"
 // //           />
-          
+
 // //           {isCameraOff && (
 // //             <div className="absolute inset-0 bg-neutral-900 flex flex-col items-center justify-center gap-1.5 text-neutral-500 z-40">
 // //               <VideoOff className="w-5 h-5" />
 // //               <p className="text-[10px] font-medium uppercase tracking-wider">Camera Off</p>
 // //             </div>
 // //           )}
-          
+
 // //           <div className="absolute bottom-3 left-3 z-40 bg-neutral-950/80 backdrop-blur-sm px-2 py-1 rounded text-[10px] font-medium tracking-wide border border-neutral-800">
 // //             You {isMuted && <span className="text-rose-400 ml-1">• Muted</span>}
 // //           </div>
@@ -301,14 +301,14 @@
 
 // //       {/* Control Navigation Footer */}
 // //       <footer className="border-t border-neutral-900 bg-neutral-950 px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-4 z-10">
-        
+
 // //         {/* Media Controls */}
 // //         <div className="flex items-center gap-3">
-// //           <button 
+// //           <button
 // //             onClick={toggleMute}
 // //             className={`p-3 rounded-xl border transition-all duration-200 ${
-// //               isMuted 
-// //                 ? 'bg-rose-500/10 border-rose-500/30 text-rose-400 hover:bg-rose-500/20' 
+// //               isMuted
+// //                 ? 'bg-rose-500/10 border-rose-500/30 text-rose-400 hover:bg-rose-500/20'
 // //                 : 'bg-neutral-900 border-neutral-800 text-neutral-300 hover:bg-neutral-800'
 // //             }`}
 // //             title={isMuted ? "Unmute Mic" : "Mute Mic"}
@@ -316,11 +316,11 @@
 // //             {isMuted ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
 // //           </button>
 
-// //           <button 
+// //           <button
 // //             onClick={toggleCamera}
 // //             className={`p-3 rounded-xl border transition-all duration-200 ${
-// //               isCameraOff 
-// //                 ? 'bg-rose-500/10 border-rose-500/30 text-rose-400 hover:bg-rose-500/20' 
+// //               isCameraOff
+// //                 ? 'bg-rose-500/10 border-rose-500/30 text-rose-400 hover:bg-rose-500/20'
 // //                 : 'bg-neutral-900 border-neutral-800 text-neutral-300 hover:bg-neutral-800'
 // //             }`}
 // //             title={isCameraOff ? "Turn Cam On" : "Turn Cam Off"}
@@ -333,14 +333,14 @@
 // //         <div className="flex items-center gap-3 w-full sm:w-auto">
 // //           {isConnected ? (
 // //             <>
-// //               <button 
+// //               <button
 // //                 onClick={nextStranger}
 // //                 className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-neutral-900 border border-neutral-800 text-rose-400 hover:bg-rose-500/10 hover:border-rose-500/30 font-medium text-sm transition-all duration-200 w-full sm:w-auto"
 // //               >
 // //                 <PhoneOff className="w-4 h-4" />
 // //                 Skip
 // //               </button>
-// //               <button 
+// //               <button
 // //                 onClick={nextStranger}
 // //                 className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-sm shadow-lg shadow-indigo-600/20 transition-all duration-200 w-full sm:w-auto"
 // //               >
@@ -349,7 +349,7 @@
 // //               </button>
 // //             </>
 // //           ) : (
-// //             <button 
+// //             <button
 // //               onClick={findStranger}
 // //               disabled={isSearching}
 // //               className="flex items-center justify-center gap-2 px-8 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:bg-neutral-900 disabled:text-neutral-600 disabled:border-neutral-800 text-white font-medium text-sm shadow-lg shadow-indigo-600/20 transition-all duration-200 w-full sm:w-auto"
@@ -379,21 +379,20 @@
 // //   );
 // // }
 
-
 // "use client";
 
 // import { useEffect, useRef, useState } from "react";
 // import { io } from "socket.io-client";
-// import { 
-//   Video, 
-//   VideoOff, 
-//   Mic, 
-//   MicOff, 
-//   PhoneOff, 
-//   ArrowRight, 
-//   Search, 
-//   Circle, 
-//   User, 
+// import {
+//   Video,
+//   VideoOff,
+//   Mic,
+//   MicOff,
+//   PhoneOff,
+//   ArrowRight,
+//   Search,
+//   Circle,
+//   User,
 //   ShieldAlert,
 //   Loader2
 // } from "lucide-react";
@@ -576,7 +575,7 @@
 
 //   return (
 //     <div className="min-h-screen flex flex-col bg-background text-foreground antialiased selection:bg-primary/10">
-      
+
 //       {/* Header Bar */}
 //       <header className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-border bg-background/95 backdrop-blur-md sticky top-0 z-50">
 //         <div className="flex items-center gap-3">
@@ -592,7 +591,7 @@
 //             <Circle className="w-1.5 h-1.5 fill-emerald-500 text-emerald-500" />
 //             <span>{onlineCount.toLocaleString()} online</span>
 //           </Badge>
-          
+
 //           <div className="hidden xs:block">
 //             {isSearching && (
 //               <Badge variant="secondary" className="animate-pulse">Searching</Badge>
@@ -606,10 +605,10 @@
 
 //       {/* Main Viewport Container */}
 //       <main className="flex-1 w-full max-w-5xl mx-auto p-4 flex flex-col gap-4">
-        
+
 //         {/* Immersive Responsive Video Workspace (WhatsApp/Facetime Style) */}
 //         <div className="relative flex-1 w-full min-h-[480px] md:min-h-[620px] rounded-2xl bg-muted/40 border border-border overflow-hidden shadow-sm flex items-center justify-center transition-all">
-          
+
 //           {/* 1. Main Wide Stranger Feed */}
 //           <video
 //             ref={remoteVideo}
@@ -635,21 +634,21 @@
 //                   {isSearching ? "Matching Feed..." : "Meet Random Peers"}
 //                 </h3>
 //                 <p className="text-xs text-muted-foreground leading-relaxed">
-//                   {isSearching 
-//                     ? "Scanning campus listings. Pairing you with another active student feed." 
+//                   {isSearching
+//                     ? "Scanning campus listings. Pairing you with another active student feed."
 //                     : "Connect instantly to random verified users hanging out on campus right now."}
 //                 </p>
 //               </div>
 //             </div>
 //           )}
-          
+
 //           {/* Custom Overlay Anchors */}
 //           <div className="absolute top-3 left-3 z-30">
 //             <Badge variant="secondary" className="backdrop-blur-sm bg-background/80 text-[11px] font-medium tracking-wide border-border shadow-sm">
 //               Stranger
 //             </Badge>
 //           </div>
-          
+
 //           <div className="absolute top-3 right-3 z-30 max-w-[200px] hidden sm:block">
 //             <div className="bg-background/80 backdrop-blur-sm border border-border px-2.5 py-1 rounded-md text-[10px] font-mono text-muted-foreground truncate shadow-sm">
 //               {status}
@@ -658,10 +657,10 @@
 
 //           {/* 2. Compact Floating Local Feed (Floating PIP Window) */}
 //           <div className="
-//             absolute bottom-4 right-4 
-//             w-28 h-40 xs:w-36 xs:h-52 md:w-44 md:h-60 
-//             rounded-xl overflow-hidden 
-//             bg-background border border-border 
+//             absolute bottom-4 right-4
+//             w-28 h-40 xs:w-36 xs:h-52 md:w-44 md:h-60
+//             rounded-xl overflow-hidden
+//             bg-background border border-border
 //             shadow-xl transition-all duration-300 z-40 flex items-center justify-center
 //           ">
 //             <video
@@ -671,14 +670,14 @@
 //               playsInline
 //               className="h-full w-full object-cover scale-x-[-1]"
 //             />
-            
+
 //             {isCameraOff && (
 //               <div className="absolute inset-0 bg-muted flex flex-col items-center justify-center gap-1.5 text-muted-foreground z-40">
 //                 <VideoOff className="w-4 h-4" />
 //                 <p className="text-[9px] font-medium tracking-wider uppercase">Cam Off</p>
 //               </div>
 //             )}
-            
+
 //             <div className="absolute bottom-2 left-2 z-40 bg-background/90 backdrop-blur-sm px-1.5 py-0.5 rounded text-[9px] font-medium tracking-wide border border-border shadow-sm">
 //               You {isMuted && <span className="text-destructive ml-0.5">• Muted</span>}
 //             </div>
@@ -689,10 +688,10 @@
 
 //       {/* Control Actions Tray */}
 //       <footer className="border-t border-border bg-background sticky bottom-0 z-50 px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-        
+
 //         {/* Minimal Mechanical Toggles */}
 //         <div className="flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-start">
-//           <Button 
+//           <Button
 //             variant={isMuted ? "destructive" : "outline"}
 //             size="icon"
 //             onClick={toggleMute}
@@ -702,7 +701,7 @@
 //             {isMuted ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
 //           </Button>
 
-//           <Button 
+//           <Button
 //             variant={isCameraOff ? "destructive" : "outline"}
 //             size="icon"
 //             onClick={toggleCamera}
@@ -717,7 +716,7 @@
 //         <div className="flex items-center gap-2.5 w-full sm:w-auto">
 //           {isConnected ? (
 //             <>
-//               <Button 
+//               <Button
 //                 variant="outline"
 //                 onClick={nextStranger}
 //                 className="flex-1 sm:flex-none h-10 rounded-xl px-5 text-xs font-medium gap-1.5"
@@ -725,7 +724,7 @@
 //                 <PhoneOff className="w-3.5 h-3.5" />
 //                 Skip
 //               </Button>
-//               <Button 
+//               <Button
 //                 variant="default"
 //                 onClick={nextStranger}
 //                 className="flex-1 sm:flex-none h-10 rounded-xl px-5 text-xs font-medium gap-1.5 shadow-sm"
@@ -735,7 +734,7 @@
 //               </Button>
 //             </>
 //           ) : (
-//             <Button 
+//             <Button
 //               variant="default"
 //               onClick={findStranger}
 //               disabled={isSearching}
@@ -766,26 +765,25 @@
 //   );
 // }
 
-
 "use client";
 
 import { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import { useTheme } from "next-themes"; // Standard Shadcn theme hook
-import { 
-  Video, 
-  VideoOff, 
-  Mic, 
-  MicOff, 
-  PhoneOff, 
-  ArrowRight, 
-  Search, 
-  Circle, 
-  User, 
+import {
+  Video,
+  VideoOff,
+  Mic,
+  MicOff,
+  PhoneOff,
+  ArrowRight,
+  Search,
+  Circle,
+  User,
   ShieldAlert,
   Loader2,
   Sun,
-  Moon
+  Moon,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -832,14 +830,18 @@ export default function Home() {
 
     socket.on("offer", async ({ from, offer }) => {
       await createPeerConnection(from);
-      await peerConnection.current!.setRemoteDescription(new RTCSessionDescription(offer));
+      await peerConnection.current!.setRemoteDescription(
+        new RTCSessionDescription(offer),
+      );
       const answer = await peerConnection.current!.createAnswer();
       await peerConnection.current!.setLocalDescription(answer);
       socket.emit("answer", { to: from, answer });
     });
 
     socket.on("answer", async ({ answer }) => {
-      await peerConnection.current!.setRemoteDescription(new RTCSessionDescription(answer));
+      await peerConnection.current!.setRemoteDescription(
+        new RTCSessionDescription(answer),
+      );
     });
 
     socket.on("ice-candidate", async ({ candidate }) => {
@@ -894,13 +896,37 @@ export default function Home() {
     const pc = new RTCPeerConnection({
       iceServers: [
         { urls: "stun:stun.relay.metered.ca:80" },
-        { urls: "turn:global.relay.metered.ca:80", username: "a5a42f645ba0512bed56761a", credential: "o1LXCnRP7WhB0p2J" },
-        { urls: "turn:global.relay.metered.ca:80?transport=tcp", username: "a5a42f645ba0512bed56761a", credential: "o1LXCnRP7WhB0p2J" },
-        { urls: "turn:global.relay.metered.ca:443", username: "a5a42f645ba0512bed56761a", credential: "o1LXCnRP7WhB0p2J" },
-        { urls: "turns:global.relay.metered.ca:443?transport=tcp", username: "a5a42f645ba0512bed56761a", credential: "o1LXCnRP7WhB0p2J" },
+        {
+          urls: "turn:global.relay.metered.ca:80",
+          username: "a5a42f645ba0512bed56761a",
+          credential: "o1LXCnRP7WhB0p2J",
+        },
+        {
+          urls: "turn:global.relay.metered.ca:80?transport=tcp",
+          username: "a5a42f645ba0512bed56761a",
+          credential: "o1LXCnRP7WhB0p2J",
+        },
+        {
+          urls: "turn:global.relay.metered.ca:443",
+          username: "a5a42f645ba0512bed56761a",
+          credential: "o1LXCnRP7WhB0p2J",
+        },
+        {
+          urls: "turns:global.relay.metered.ca:443?transport=tcp",
+          username: "a5a42f645ba0512bed56761a",
+          credential: "o1LXCnRP7WhB0p2J",
+        },
       ],
       iceTransportPolicy: "all",
     });
+
+    pc.oniceconnectionstatechange = () => {
+      console.log("ICE STATE:", pc.iceConnectionState);
+    };
+
+    pc.onconnectionstatechange = () => {
+      console.log("CONNECTION STATE:", pc.connectionState);
+    };
 
     peerConnection.current = pc;
 
@@ -966,40 +992,41 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground antialiased selection:bg-primary/10">
-      
       {/* Header Bar */}
       <header className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-border bg-background/95 backdrop-blur-md sticky top-0 z-50">
         <div className="flex items-center gap-3">
           <div className="h-2.5 w-2.5 rounded-full bg-primary animate-pulse" />
           <h1 className="text-lg font-bold tracking-tight">
-            CAMPUS<span className="text-muted-foreground font-normal">CONNECT</span>
+            CAMPUS
+            <span className="text-muted-foreground font-normal">CONNECT</span>
           </h1>
         </div>
 
         {/* Dynamic Context Status Badges */}
         <div className="flex items-center gap-3">
-          <Badge variant="outline" className="gap-1.5 font-normal py-1 px-2.5 rounded-full">
+          <Badge
+            variant="outline"
+            className="gap-1.5 font-normal py-1 px-2.5 rounded-full"
+          >
             <Circle className="w-1.5 h-1.5 fill-emerald-500 text-emerald-500" />
             <span>{onlineCount.toLocaleString()} online</span>
           </Badge>
-          
+
           <div className="hidden xs:block">
             {isSearching && (
-              <Badge variant="secondary" className="animate-pulse">Searching</Badge>
+              <Badge variant="secondary" className="animate-pulse">
+                Searching
+              </Badge>
             )}
-            {isConnected && (
-              <Badge variant="default">Live Session</Badge>
-            )}
+            {isConnected && <Badge variant="default">Live Session</Badge>}
           </div>
         </div>
       </header>
 
       {/* Main Viewport Container */}
       <main className="flex-1 w-full max-w-5xl mx-auto p-4 flex flex-col gap-4">
-        
         {/* Immersive Responsive Video Workspace */}
         <div className="relative flex-1 w-full min-h-[480px] md:min-h-[620px] rounded-2xl bg-muted/40 overflow-hidden shadow-sm flex items-center justify-center transition-all">
-          
           {/* 1. Main Wide Stranger Feed */}
           <video
             ref={remoteVideo}
@@ -1025,21 +1052,24 @@ export default function Home() {
                   {isSearching ? "Matching Feed..." : "Meet Random Peers"}
                 </h3>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  {isSearching 
-                    ? "Scanning campus listings. Pairing you with another active student feed." 
+                  {isSearching
+                    ? "Scanning campus listings. Pairing you with another active student feed."
                     : "Connect instantly to random verified users hanging out on campus right now."}
                 </p>
               </div>
             </div>
           )}
-          
+
           {/* Custom Overlay Anchors */}
           <div className="absolute top-3 left-3 z-30">
-            <Badge variant="secondary" className="backdrop-blur-sm bg-background/80 text-[11px] font-medium tracking-wide border-border shadow-sm">
+            <Badge
+              variant="secondary"
+              className="backdrop-blur-sm bg-background/80 text-[11px] font-medium tracking-wide border-border shadow-sm"
+            >
               Stranger
             </Badge>
           </div>
-          
+
           <div className="absolute top-3 right-3 z-30 max-w-[200px] hidden sm:block">
             <div className="bg-background/80 backdrop-blur-sm border border-border px-2.5 py-1 rounded-md text-[10px] font-mono text-muted-foreground truncate shadow-sm">
               {status}
@@ -1047,13 +1077,15 @@ export default function Home() {
           </div>
 
           {/* 2. Compact Floating Local Feed */}
-          <div className="
+          <div
+            className="
             absolute bottom-4 right-4 
             w-28 h-40 xs:w-36 xs:h-52 md:w-44 md:h-60 
             rounded-xl overflow-hidden 
             bg-background 
             shadow-xl transition-all duration-300 z-40 flex items-center justify-center
-          ">
+          "
+          >
             <video
               ref={localVideo}
               autoPlay
@@ -1061,45 +1093,56 @@ export default function Home() {
               playsInline
               className="h-full w-full object-cover scale-x-[-1]"
             />
-            
+
             {isCameraOff && (
               <div className="absolute inset-0 bg-muted flex flex-col items-center justify-center gap-1.5 text-muted-foreground z-40">
                 <VideoOff className="w-4 h-4" />
-                <p className="text-[9px] font-medium tracking-wider uppercase">Cam Off</p>
+                <p className="text-[9px] font-medium tracking-wider uppercase">
+                  Cam Off
+                </p>
               </div>
             )}
-            
+
             <div className="absolute bottom-2 left-2 z-40 bg-background/90 backdrop-blur-sm px-1.5 py-0.5 rounded text-[9px] font-medium tracking-wide border border-border shadow-sm">
-              You {isMuted && <span className="text-destructive ml-0.5">• Muted</span>}
+              You{" "}
+              {isMuted && (
+                <span className="text-destructive ml-0.5">• Muted</span>
+              )}
             </div>
           </div>
-
         </div>
       </main>
 
       {/* Control Actions Tray */}
       <footer className="border-t border-border bg-background sticky bottom-0 z-50 px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-        
         {/* Hardware Toggles & Light/Dark Mode Switcher */}
         <div className="flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-start">
-          <Button 
+          <Button
             variant={isMuted ? "destructive" : "outline"}
             size="icon"
             onClick={toggleMute}
             className="h-10 w-10 rounded-xl"
             title={isMuted ? "Unmute Microphone" : "Mute Microphone"}
           >
-            {isMuted ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+            {isMuted ? (
+              <MicOff className="w-4 h-4" />
+            ) : (
+              <Mic className="w-4 h-4" />
+            )}
           </Button>
 
-          <Button 
+          <Button
             variant={isCameraOff ? "destructive" : "outline"}
             size="icon"
             onClick={toggleCamera}
             className="h-10 w-10 rounded-xl"
             title={isCameraOff ? "Enable Video Camera" : "Disable Video Camera"}
           >
-            {isCameraOff ? <VideoOff className="w-4 h-4" /> : <Video className="w-4 h-4" />}
+            {isCameraOff ? (
+              <VideoOff className="w-4 h-4" />
+            ) : (
+              <Video className="w-4 h-4" />
+            )}
           </Button>
 
           {/* Theme Switcher Button */}
@@ -1120,7 +1163,7 @@ export default function Home() {
         <div className="flex items-center gap-2.5 w-full sm:w-auto">
           {isConnected ? (
             <>
-              <Button 
+              <Button
                 variant="outline"
                 onClick={nextStranger}
                 className="flex-1 sm:flex-none h-10 rounded-xl px-5 text-xs font-medium gap-1.5"
@@ -1128,7 +1171,7 @@ export default function Home() {
                 <PhoneOff className="w-3.5 h-3.5" />
                 Skip
               </Button>
-              <Button 
+              <Button
                 variant="default"
                 onClick={nextStranger}
                 className="flex-1 sm:flex-none h-10 rounded-xl px-5 text-xs font-medium gap-1.5 shadow-sm"
@@ -1138,7 +1181,7 @@ export default function Home() {
               </Button>
             </>
           ) : (
-            <Button 
+            <Button
               variant="default"
               onClick={findStranger}
               disabled={isSearching}
