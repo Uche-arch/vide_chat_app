@@ -1,0 +1,2986 @@
+// "use client"
+// import React, { useState } from 'react';
+// import { 
+//   Video, 
+//   VideoOff, 
+//   Mic, 
+//   MicOff, 
+//   PhoneOff, 
+//   ArrowRight, 
+//   Search, 
+//   Circle, 
+//   User, 
+//   ShieldAlert 
+// } from 'lucide-react';
+
+// type ConnectionStatus = 'idle' | 'searching' | 'connected';
+
+// export default function OmegleClone() {
+//   const [status, setStatus] = useState<ConnectionStatus>('idle');
+//   const [isMuted, setIsMuted] = useState(false);
+//   const [isCamOff, setIsCamOff] = useState(false);
+//   const [participantCount, setParticipantCount] = useState(1420);
+
+//   const handleConnect = () => {
+//     setStatus('searching');
+//     setTimeout(() => {
+//       setStatus('connected');
+//     }, 2000);
+//   };
+
+//   const handleDisconnect = () => {
+//     setStatus('idle');
+//   };
+
+//   return (
+//     <div className="flex flex-col h-screen bg-neutral-950 text-neutral-100 font-sans overflow-hidden">
+//       {/* Top Navigation / Header */}
+//       <header className="flex items-center justify-between px-6 py-4 border-b border-neutral-900 bg-neutral-950/80 backdrop-blur-md z-10">
+//         <div className="flex items-center gap-3">
+//           <div className="h-3 w-3 rounded-full bg-indigo-500 animate-pulse" />
+//           <h1 className="text-xl font-bold tracking-tight bg-gradient-to-r from-neutral-100 to-neutral-400 bg-clip-text text-transparent">
+//             STRANGER<span className="text-indigo-500">LOOP</span>
+//           </h1>
+//         </div>
+
+//         {/* Status Badges */}
+//         <div className="flex items-center gap-4 sm:gap-6">
+//           <div className="hidden sm:flex items-center gap-2 text-sm text-neutral-400 bg-neutral-900 px-3 py-1.5 rounded-full border border-neutral-800">
+//             <Circle className="w-2 h-2 fill-emerald-500 text-emerald-500" />
+//             <span>{participantCount.toLocaleString()} online</span>
+//           </div>
+          
+//           <div>
+//             {status === 'idle' && (
+//               <span className="text-xs font-medium uppercase tracking-wider text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded border border-neutral-800">Disconnected</span>
+//             )}
+//             {status === 'searching' && (
+//               <span className="text-xs font-medium uppercase tracking-wider text-amber-400 bg-amber-950/30 border border-amber-900/50 px-2.5 py-1 rounded animate-pulse">Searching...</span>
+//             )}
+//             {status === 'connected' && (
+//               <span className="text-xs font-medium uppercase tracking-wider text-emerald-400 bg-emerald-950/30 border border-emerald-900/50 px-2.5 py-1 rounded">Connected</span>
+//             )}
+//           </div>
+//         </div>
+//       </header>
+
+//       {/* Main Viewport */}
+//       <main className="flex-1 relative p-4 max-w-7xl w-full mx-auto flex flex-col md:block">
+        
+//         {/* 1. Main Hero View (Stranger) */}
+//         <div className="w-full h-full rounded-2xl bg-neutral-900 border border-neutral-800 overflow-hidden flex items-center justify-center relative shadow-2xl transition-all duration-300">
+//           {status === 'connected' ? (
+//             <div className="w-full h-full bg-neutral-800 flex items-center justify-center text-neutral-500">
+//               {/* <video /> element goes here */}
+//               <p className="text-sm font-mono text-neutral-400">Remote Video Stream</p>
+//             </div>
+//           ) : (
+//             <div className="flex flex-col items-center gap-3 text-center px-4">
+//               <div className="p-4 rounded-full bg-neutral-950/50 border border-neutral-800 text-neutral-600">
+//                 <User className="w-8 h-8" />
+//               </div>
+//               <p className="text-neutral-400 font-medium max-w-xs">
+//                 {status === 'searching' ? 'Scouting the web for a match...' : 'Hit match to meet someone new.'}
+//               </p>
+//             </div>
+//           )}
+          
+//           <div className="absolute top-4 left-4 bg-neutral-950/80 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-neutral-800 text-xs font-medium tracking-wide">
+//             Stranger
+//           </div>
+//         </div>
+
+//         {/* 2. Floating Self View (You) */}
+//         <div className="
+//           mt-4 md:mt-0 
+//           w-full md:w-64 md:h-44 
+//           aspect-video md:aspect-auto 
+//           md:absolute md:bottom-8 md:right-8 
+//           rounded-xl overflow-hidden 
+//           bg-neutral-950 border-2 border-neutral-800 
+//           shadow-2xl transition-all duration-300 z-10 flex items-center justify-center
+//         ">
+//           {isCamOff ? (
+//             <div className="flex flex-col items-center gap-1.5 text-neutral-600">
+//               <VideoOff className="w-5 h-5" />
+//               <p className="text-[10px] font-medium uppercase tracking-wider">Camera Off</p>
+//             </div>
+//           ) : (
+//             <div className="w-full h-full bg-neutral-800/60 flex items-center justify-center text-neutral-500">
+//               {/* <video /> element goes here */}
+//               <p className="text-xs font-mono text-neutral-400">Your Video</p>
+//             </div>
+//           )}
+          
+//           <div className="absolute bottom-3 left-3 bg-neutral-950/80 backdrop-blur-sm px-2 py-1 rounded text-[10px] font-medium tracking-wide border border-neutral-800">
+//             You {isMuted && <span className="text-rose-400 ml-1">• Muted</span>}
+//           </div>
+//         </div>
+
+//       </main>
+
+//       {/* Control Bar */}
+//       <footer className="border-t border-neutral-900 bg-neutral-950 px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-4 z-10">
+//         {/* Media Control Toggles */}
+//         <div className="flex items-center gap-3">
+//           <button 
+//             onClick={() => setIsMuted(!isMuted)}
+//             className={`p-3 rounded-xl border transition-all duration-200 ${
+//               isMuted 
+//                 ? 'bg-rose-500/10 border-rose-500/30 text-rose-400 hover:bg-rose-500/20' 
+//                 : 'bg-neutral-900 border-neutral-800 text-neutral-300 hover:bg-neutral-800'
+//             }`}
+//             title={isMuted ? "Unmute Mic" : "Mute Mic"}
+//           >
+//             {isMuted ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+//           </button>
+
+//           <button 
+//             onClick={() => setIsCamOff(!isCamOff)}
+//             className={`p-3 rounded-xl border transition-all duration-200 ${
+//               isCamOff 
+//                 ? 'bg-rose-500/10 border-rose-500/30 text-rose-400 hover:bg-rose-500/20' 
+//                 : 'bg-neutral-900 border-neutral-800 text-neutral-300 hover:bg-neutral-800'
+//             }`}
+//             title={isCamOff ? "Turn Cam On" : "Turn Cam Off"}
+//           >
+//             {isCamOff ? <VideoOff className="w-5 h-5" /> : <Video className="w-5 h-5" />}
+//           </button>
+//         </div>
+
+//         {/* Primary Actions */}
+//         <div className="flex items-center gap-3 w-full sm:w-auto">
+//           {status === 'connected' ? (
+//             <>
+//               <button 
+//                 onClick={handleDisconnect}
+//                 className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-neutral-900 border border-neutral-800 text-rose-400 hover:bg-rose-500/10 hover:border-rose-500/30 font-medium text-sm transition-all duration-200 w-full sm:w-auto"
+//               >
+//                 <PhoneOff className="w-4 h-4" />
+//                 Skip
+//               </button>
+//               <button 
+//                 onClick={handleConnect}
+//                 className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-sm shadow-lg shadow-indigo-600/20 transition-all duration-200 w-full sm:w-auto"
+//               >
+//                 Next Stranger
+//                 <ArrowRight className="w-4 h-4" />
+//               </button>
+//             </>
+//           ) : (
+//             <button 
+//               onClick={handleConnect}
+//               disabled={status === 'searching'}
+//               className="flex items-center justify-center gap-2 px-8 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:bg-neutral-900 disabled:text-neutral-600 disabled:border-neutral-800 text-white font-medium text-sm shadow-lg shadow-indigo-600/20 transition-all duration-200 w-full sm:w-auto"
+//             >
+//               {status === 'searching' ? (
+//                 <>
+//                   <Search className="w-4 h-4 animate-spin" />
+//                   Finding Someone...
+//                 </>
+//               ) : (
+//                 <>
+//                   <Search className="w-4 h-4" />
+//                   Find Stranger
+//                 </>
+//               )}
+//             </button>
+//           )}
+//         </div>
+
+//         {/* Community Notice */}
+//         <div className="hidden lg:flex items-center gap-1.5 text-xs text-neutral-600">
+//           <ShieldAlert className="w-3.5 h-3.5" />
+//           <span>Keep interactions safe and respectful.</span>
+//         </div>
+//       </footer>
+//     </div>
+//   );
+// }
+// import React, { useState } from 'react';
+// import { 
+//   Video, 
+//   VideoOff, 
+//   Mic, 
+//   MicOff, 
+//   PhoneOff, 
+//   ArrowRight, 
+//   Search, 
+//   Circle, 
+//   User, 
+//   ShieldAlert 
+// } from 'lucide-react';
+
+// type ConnectionStatus = 'idle' | 'searching' | 'connected';
+
+// export default function OmegleClone() {
+//   const [status, setStatus] = useState<ConnectionStatus>('idle');
+//   const [isMuted, setIsMuted] = useState(false);
+//   const [isCamOff, setIsCamOff] = useState(false);
+//   const [participantCount, setParticipantCount] = useState(1420); // Dummy metric
+
+//   const handleConnect = () => {
+//     setStatus('searching');
+//     // Simulate finding a peer
+//     setTimeout(() => {
+//       setStatus('connected');
+//     }, 2000);
+//   };
+
+//   const handleDisconnect = () => {
+//     setStatus('idle');
+//   };
+
+//   return (
+//     <div className="flex flex-col h-screen bg-neutral-950 text-neutral-100 font-sans">
+//       {/* Top Navigation / Header */}
+//       <header className="flex items-center justify-between px-6 py-4 border-b border-neutral-900 bg-neutral-950/50 backdrop-blur-md">
+//         <div className="flex items-center gap-3">
+//           <div className="h-3 w-3 rounded-full bg-indigo-500 animate-pulse" />
+//           <h1 className="text-xl font-bold tracking-tight bg-gradient-to-r from-neutral-100 to-neutral-400 bg-clip-text text-transparent">
+//             STRANGER<span className="text-indigo-500">LOOP</span>
+//           </h1>
+//         </div>
+
+//         {/* Status Badge */}
+//         <div className="flex items-center gap-6">
+//           <div className="flex items-center gap-2 text-sm text-neutral-400 bg-neutral-900 px-3 py-1.5 rounded-full border border-neutral-800">
+//             <Circle className="w-2 h-2 fill-emerald-500 text-emerald-500" />
+//             <span>{participantCount.toLocaleString()} online</span>
+//           </div>
+          
+//           <div className="flex items-center gap-2">
+//             {status === 'idle' && (
+//               <span className="text-xs font-medium uppercase tracking-wider text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">Disconnected</span>
+//             )}
+//             {status === 'searching' && (
+//               <span className="text-xs font-medium uppercase tracking-wider text-amber-400 bg-amber-950/30 border border-amber-900/50 px-2.5 py-1 rounded animate-pulse">Searching...</span>
+//             )}
+//             {status === 'connected' && (
+//               <span className="text-xs font-medium uppercase tracking-wider text-emerald-400 bg-emerald-950/30 border border-emerald-900/50 px-2.5 py-1 rounded">Connected</span>
+//             )}
+//           </div>
+//         </div>
+//       </header>
+
+//       {/* Main Video Grid */}
+//       <main className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4 p-4 max-w-7xl w-full mx-auto">
+//         {/* Remote View (Stranger) */}
+//         <div className="relative rounded-2xl bg-neutral-900 border border-neutral-800 overflow-hidden flex items-center justify-center transition-all duration-300 shadow-2xl">
+//           {status === 'connected' ? (
+//             <div className="w-full h-full bg-neutral-800 flex items-center justify-center text-neutral-500">
+//               {/* Replace with your actual <video> stream tag */}
+//               <p className="text-sm font-mono text-neutral-400">Remote Video Stream</p>
+//             </div>
+//           ) : (
+//             <div className="flex flex-col items-center gap-3 text-center px-4">
+//               <div className="p-4 rounded-full bg-neutral-950/50 border border-neutral-800 text-neutral-600">
+//                 <User className="w-8 h-8" />
+//               </div>
+//               <p className="text-neutral-400 font-medium">
+//                 {status === 'searching' ? 'Looking for a wild stranger...' : 'Ready when you are.'}
+//               </p>
+//             </div>
+//           )}
+//           <div className="absolute top-4 left-4 bg-neutral-950/70 backdrop-blur-sm px-3 py-1 rounded-lg border border-neutral-800 text-xs font-medium tracking-wide">
+//             Stranger
+//           </div>
+//         </div>
+
+//         {/* Local View (You) */}
+//         <div className="relative rounded-2xl bg-neutral-900 border border-neutral-800 overflow-hidden flex items-center justify-center shadow-2xl">
+//           {isCamOff ? (
+//             <div className="flex flex-col items-center gap-2 text-neutral-600">
+//               <VideoOff className="w-8 h-8" />
+//               <p className="text-xs font-medium uppercase tracking-wider">Camera Off</p>
+//             </div>
+//           ) : (
+//             <div className="w-full h-full bg-neutral-800/50 flex items-center justify-center text-neutral-500">
+//               {/* Replace with your local <video> stream tag */}
+//               <p className="text-sm font-mono text-neutral-400">Your Video Stream</p>
+//             </div>
+//           )}
+          
+//           <div className="absolute top-4 left-4 bg-indigo-650 px-3 py-1 bg-indigo-600 rounded-lg text-xs font-medium tracking-wide shadow-md">
+//             You {isMuted && '• Muted'}
+//           </div>
+//         </div>
+//       </main>
+
+//       {/* Control Bar */}
+//       <footer className="border-t border-neutral-900 bg-neutral-950 px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+//         {/* Media Control Toggles */}
+//         <div className="flex items-center gap-3">
+//           <button 
+//             onClick={() => setIsMuted(!isMuted)}
+//             className={`p-3.5 rounded-xl border transition-all duration-200 ${
+//               isMuted 
+//                 ? 'bg-rose-500/10 border-rose-500/30 text-rose-400 hover:bg-rose-500/20' 
+//                 : 'bg-neutral-900 border-neutral-800 text-neutral-300 hover:bg-neutral-800'
+//             }`}
+//             title={isMuted ? "Unmute Mic" : "Mute Mic"}
+//           >
+//             {isMuted ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+//           </button>
+
+//           <button 
+//             onClick={() => setIsCamOff(!isCamOff)}
+//             className={`p-3.5 rounded-xl border transition-all duration-200 ${
+//               isCamOff 
+//                 ? 'bg-rose-500/10 border-rose-500/30 text-rose-400 hover:bg-rose-500/20' 
+//                 : 'bg-neutral-900 border-neutral-800 text-neutral-300 hover:bg-neutral-800'
+//             }`}
+//             title={isCamOff ? "Turn Cam On" : "Turn Cam Off"}
+//           >
+//             {isCamOff ? <VideoOff className="w-5 h-5" /> : <Video className="w-5 h-5" />}
+//           </button>
+//         </div>
+
+//         {/* Primary Engine Actions */}
+//         <div className="flex items-center gap-3 w-full sm:w-auto">
+//           {status === 'connected' ? (
+//             <>
+//               <button 
+//                 onClick={handleDisconnect}
+//                 className="flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-neutral-900 border border-neutral-800 text-rose-400 hover:bg-rose-500/10 hover:border-rose-500/30 font-medium text-sm transition-all duration-200 w-full sm:w-auto"
+//               >
+//                 <PhoneOff className="w-4 h-4" />
+//                 Disconnect
+//               </button>
+//               <button 
+//                 onClick={handleConnect}
+//                 className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-sm shadow-lg shadow-indigo-600/20 transition-all duration-200 w-full sm:w-auto"
+//               >
+//                 Next Stranger
+//                 <ArrowRight className="w-4 h-4" />
+//               </button>
+//             </>
+//           ) : (
+//             <button 
+//               onClick={handleConnect}
+//               disabled={status === 'searching'}
+//               className="flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:bg-neutral-900 disabled:text-neutral-600 disabled:border-neutral-800 text-white font-medium text-sm shadow-lg shadow-indigo-600/20 transition-all duration-200 w-full sm:w-auto"
+//             >
+//               {status === 'searching' ? (
+//                 <>
+//                   <Search className="w-4 h-4 animate-spin" />
+//                   Finding Someone...
+//                 </>
+//               ) : (
+//                 <>
+//                   <Search className="w-4 h-4" />
+//                   Find Stranger
+//                 </>
+//               )}
+//             </button>
+//           )}
+//         </div>
+
+//         {/* Micro Footer Notice */}
+//         <div className="hidden lg:flex items-center gap-1.5 text-xs text-neutral-600">
+//           <ShieldAlert className="w-3.5 h-3.5" />
+//           <span>Keep it friendly. Adhere to community guidelines.</span>
+//         </div>
+//       </footer>
+//     </div>
+//   );
+// }
+
+
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { io } from "socket.io-client";
+import { 
+  Video, 
+  VideoOff, 
+  Mic, 
+  MicOff, 
+  UserPlus, 
+  ArrowRight, 
+  Users, 
+  Radio, 
+  Loader2, 
+  Sparkles 
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+
+const socket = io("https://video-chat-server-b3zd.onrender.com");
+
+export default function Home() {
+  const localVideo = useRef<HTMLVideoElement>(null);
+  const remoteVideo = useRef<HTMLVideoElement>(null);
+  const peerConnection = useRef<RTCPeerConnection | null>(null);
+  const localStream = useRef<MediaStream | null>(null);
+
+  const [partnerId, setPartnerId] = useState("");
+  const [status, setStatus] = useState("Idle");
+  const [isSearching, setIsSearching] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
+  const [onlineCount, setOnlineCount] = useState(0);
+  const [isMuted, setIsMuted] = useState(false);
+  const [isCameraOff, setIsCameraOff] = useState(false);
+
+  useEffect(() => {
+    startCamera();
+
+    socket.on("online-count", (count) => {
+      setOnlineCount(count);
+    });
+
+    socket.on("matched", async ({ partnerId, initiator }) => {
+      setStatus("Matched with a stranger");
+      setIsSearching(false);
+      setIsConnected(true);
+      setPartnerId(partnerId);
+
+      await createPeerConnection(partnerId);
+
+      if (initiator) {
+        const offer = await peerConnection.current!.createOffer();
+        await peerConnection.current!.setLocalDescription(offer);
+        socket.emit("offer", { to: partnerId, offer });
+      }
+    });
+
+    socket.on("offer", async ({ from, offer }) => {
+      await createPeerConnection(from);
+      await peerConnection.current!.setRemoteDescription(new RTCSessionDescription(offer));
+      const answer = await peerConnection.current!.createAnswer();
+      await peerConnection.current!.setLocalDescription(answer);
+      socket.emit("answer", { to: from, answer });
+    });
+
+    socket.on("answer", async ({ answer }) => {
+      await peerConnection.current!.setRemoteDescription(new RTCSessionDescription(answer));
+    });
+
+    socket.on("ice-candidate", async ({ candidate }) => {
+      try {
+        await peerConnection.current?.addIceCandidate(candidate);
+      } catch (err) {
+        console.error(err);
+      }
+    });
+
+    socket.on("partner-disconnected", () => {
+      cleanupConnection();
+      setStatus("Stranger left the chat");
+      setIsConnected(false);
+      setIsSearching(false);
+    });
+
+    socket.on("requeue", () => {
+      findStranger();
+    });
+
+    return () => {
+      socket.off("online-count");
+      socket.off("matched");
+      socket.off("offer");
+      socket.off("answer");
+      socket.off("ice-candidate");
+      socket.off("partner-disconnected");
+      socket.off("requeue");
+      socket.disconnect();
+    };
+  }, []);
+
+  async function startCamera() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
+      });
+      localStream.current = stream;
+      if (localVideo.current) {
+        localVideo.current.srcObject = stream;
+      }
+    } catch (err) {
+      console.error("Error accessing media devices.", err);
+    }
+  }
+
+  async function createPeerConnection(partner: string) {
+    cleanupConnection();
+
+    const pc = new RTCPeerConnection({
+      iceServers: [
+        { urls: "stun:stun.relay.metered.ca:80" },
+        { urls: "turn:global.relay.metered.ca:80", username: "a5a42f645ba0512bed56761a", credential: "o1LXCnRP7WhB0p2J" },
+        { urls: "turn:global.relay.metered.ca:80?transport=tcp", username: "a5a42f645ba0512bed56761a", credential: "o1LXCnRP7WhB0p2J" },
+        { urls: "turn:global.relay.metered.ca:443", username: "a5a42f645ba0512bed56761a", credential: "o1LXCnRP7WhB0p2J" },
+        { urls: "turns:global.relay.metered.ca:443?transport=tcp", username: "a5a42f645ba0512bed56761a", credential: "o1LXCnRP7WhB0p2J" },
+      ],
+      iceTransportPolicy: "all",
+    });
+
+    peerConnection.current = pc;
+
+    localStream.current?.getTracks().forEach((track) => {
+      pc.addTrack(track, localStream.current!);
+    });
+
+    pc.ontrack = (event) => {
+      if (remoteVideo.current) {
+        remoteVideo.current.srcObject = event.streams[0];
+      }
+    };
+
+    pc.onicecandidate = (event) => {
+      if (event.candidate) {
+        socket.emit("ice-candidate", {
+          to: partner,
+          candidate: event.candidate,
+        });
+      }
+    };
+  }
+
+  function cleanupConnection() {
+    if (peerConnection.current) {
+      peerConnection.current.close();
+      peerConnection.current = null;
+    }
+    if (remoteVideo.current) {
+      remoteVideo.current.srcObject = null;
+    }
+  }
+
+  function findStranger() {
+    setStatus("Searching for a partner...");
+    setIsSearching(true);
+    socket.emit("find-stranger");
+  }
+
+  function nextStranger() {
+    cleanupConnection();
+    setStatus("Finding next stranger...");
+    setIsConnected(false);
+    setIsSearching(true);
+    socket.emit("next-stranger");
+  }
+
+  function toggleMute() {
+    if (!localStream.current) return;
+    localStream.current.getAudioTracks().forEach((track) => {
+      track.enabled = !track.enabled;
+    });
+    setIsMuted((prev) => !prev);
+  }
+
+  function toggleCamera() {
+    if (!localStream.current) return;
+    localStream.current.getVideoTracks().forEach((track) => {
+      track.enabled = !track.enabled;
+    });
+    setIsCameraOff((prev) => !prev);
+  }
+
+  return (
+    <main className="min-h-screen bg-background text-foreground flex flex-col antialiased">
+      {/* HEADER BAR */}
+      <header className="border-b border-border bg-background sticky top-0 z-50 px-6 h-16 flex items-center justify-between">
+        <div className="flex items-center gap-2.5">
+          <div className="border border-border p-2 rounded-xl">
+            <Radio className="size-5 animate-pulse" />
+          </div>
+          <div>
+            <h1 className="text-base font-semibold tracking-tight flex items-center gap-1.5">
+              Campus Connection <span className="text-xs font-normal text-muted-foreground">v2.0</span>
+            </h1>
+          </div>
+        </div>
+
+        <Badge variant="outline" className="gap-1.5 px-3 py-1 rounded-full font-normal">
+          <Users className="size-3.5" />
+          <span className="font-medium">{onlineCount}</span> peers online
+        </Badge>
+      </header>
+
+      {/* CORE FRAME LAYOUT */}
+      <div className="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-4 gap-6 items-stretch">
+        
+        {/* VIDEO DISPLAY SUITE */}
+        <div className="lg:col-span-3 flex flex-col gap-4">
+          <Card className="bg-background border-border overflow-hidden relative flex-1 min-h-[450px] md:min-h-[580px] rounded-2xl shadow-none">
+            <CardContent className="p-0 h-full w-full relative">
+              
+              {/* REMOTE STRANGER VIDEO SCREEN */}
+              <video
+                ref={remoteVideo}
+                autoPlay
+                playsInline
+                className="absolute inset-0 h-full w-full object-cover bg-muted"
+              />
+
+              {/* SEARCHING / DISCONNECTED STATE LAYOUT */}
+              {!isConnected && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-background z-20">
+                  <div className="text-center p-6 max-w-sm">
+                    <div className="mx-auto mb-5 h-14 w-14 rounded-2xl border border-border flex items-center justify-center">
+                      {isSearching ? (
+                        <Loader2 className="size-6 animate-spin" />
+                      ) : (
+                        <Sparkles className="size-6 text-muted-foreground" />
+                      )}
+                    </div>
+                    <h3 className="text-lg font-medium mb-1">
+                      {isSearching ? "Searching the Grid..." : "Ready to Match?"}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                      {isSearching 
+                        ? "Hang tight, matching you with another verified student active on campus right now." 
+                        : "Click find stranger below to establish a secure video feed instantly."}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* FLOATING LOCAL USER PREVIEW PIN */}
+              <div className="absolute bottom-4 right-4 w-32 h-44 sm:w-44 sm:h-56 rounded-xl overflow-hidden border border-border bg-background shadow-md z-30 group">
+                <video
+                  ref={localVideo}
+                  autoPlay
+                  muted
+                  playsInline
+                  className="h-full w-full object-cover scale-x-[-1]"
+                />
+                <div className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-background border border-border text-[10px] font-medium text-foreground">
+                  You
+                </div>
+                {isCameraOff && (
+                  <div className="absolute inset-0 bg-muted flex items-center justify-center">
+                    <VideoOff className="size-5 text-muted-foreground" />
+                  </div>
+                )}
+              </div>
+
+              {/* FLOATING HUD BADGE STATUS */}
+              <div className="absolute top-4 left-4 z-30">
+                <Badge className="px-3 py-1 font-medium select-none bg-background text-foreground border-border" variant="outline">
+                  <span className="h-1.5 w-1.5 rounded-full mr-2 bg-muted-foreground" />
+                  {isConnected ? "Live Session" : "Secured Stream"}
+                </Badge>
+              </div>
+
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* CONTROLS & MONITOR SIDEBAR */}
+        <div className="lg:col-span-1 flex flex-col justify-between gap-4">
+          <Card className="bg-background border-border p-5 rounded-2xl flex flex-col justify-between h-full shadow-none">
+            <div className="space-y-5">
+              <div>
+                <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider block mb-1">
+                  Session Log Monitor
+                </span>
+                <div className="text-xs bg-muted border border-border p-3 rounded-xl min-h-[60px] font-mono text-muted-foreground leading-snug">
+                  {status}
+                </div>
+              </div>
+
+              <Separator className="bg-border" />
+
+              {/* CORE ENGAGEMENT CONTROLS */}
+              <div className="space-y-2.5">
+                <Button
+                  onClick={findStranger}
+                  disabled={isSearching || isConnected}
+                  variant="default"
+                  className="w-full h-11 text-sm font-medium rounded-xl gap-2 transition-transform active:scale-[0.98]"
+                >
+                  <UserPlus className="size-4" />
+                  Find Stranger
+                </Button>
+
+                <Button
+                  onClick={nextStranger}
+                  disabled={!isConnected && !isSearching}
+                  variant="outline"
+                  className="w-full h-11 text-sm font-medium rounded-xl gap-2 transition-transform active:scale-[0.98]"
+                >
+                  Skip Partner
+                  <ArrowRight className="size-4" />
+                </Button>
+              </div>
+            </div>
+
+            {/* HARDWARE DEVICE CONTROLS CONTAINER */}
+            <div className="pt-4 lg:pt-0">
+              <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider block mb-2.5">
+                Hardware Device Access
+              </span>
+              <div className="grid grid-cols-2 gap-2">
+                <Button
+                  variant="outline"
+                  onClick={toggleMute}
+                  className="h-11 rounded-xl text-xs font-medium border"
+                >
+                  {isMuted ? <MicOff className="size-3.5 mr-1.5" /> : <Mic className="size-3.5 mr-1.5" />}
+                  {isMuted ? "Muted" : "Mute"}
+                </Button>
+
+                <Button
+                  variant="outline"
+                  onClick={toggleCamera}
+                  className="h-11 rounded-xl text-xs font-medium border"
+                >
+                  {isCameraOff ? <VideoOff className="size-3.5 mr-1.5" /> : <Video className="size-3.5 mr-1.5" />}
+                  {isCameraOff ? "Off" : "Video"}
+                </Button>
+              </div>
+            </div>
+          </Card>
+        </div>
+
+      </div>
+    </main>
+  );
+}
+
+// "use client";
+
+// import { useEffect, useRef, useState } from "react";
+// import { io } from "socket.io-client";
+// import { 
+//   Video, 
+//   VideoOff, 
+//   Mic, 
+//   MicOff, 
+//   UserPlus, 
+//   ArrowRight, 
+//   Users, 
+//   Radio, 
+//   Loader2, 
+//   Sparkles 
+// } from "lucide-react";
+// import { Button } from "@/components/ui/button";
+// import { Card, CardContent } from "@/components/ui/card";
+// import { Badge } from "@/components/ui/badge";
+// import { Separator } from "@/components/ui/separator";
+
+// const socket = io("https://video-chat-server-b3zd.onrender.com");
+
+// export default function Home() {
+//   const localVideo = useRef<HTMLVideoElement>(null);
+//   const remoteVideo = useRef<HTMLVideoElement>(null);
+//   const peerConnection = useRef<RTCPeerConnection | null>(null);
+//   const localStream = useRef<MediaStream | null>(null);
+
+//   const [partnerId, setPartnerId] = useState("");
+//   const [status, setStatus] = useState("Idle");
+//   const [isSearching, setIsSearching] = useState(false);
+//   const [isConnected, setIsConnected] = useState(false);
+//   const [onlineCount, setOnlineCount] = useState(0);
+//   const [isMuted, setIsMuted] = useState(false);
+//   const [isCameraOff, setIsCameraOff] = useState(false);
+
+//   useEffect(() => {
+//     startCamera();
+
+//     socket.on("online-count", (count) => {
+//       setOnlineCount(count);
+//     });
+
+//     socket.on("matched", async ({ partnerId, initiator }) => {
+//       setStatus("Matched with a stranger");
+//       setIsSearching(false);
+//       setIsConnected(true);
+//       setPartnerId(partnerId);
+
+//       await createPeerConnection(partnerId);
+
+//       if (initiator) {
+//         const offer = await peerConnection.current!.createOffer();
+//         await peerConnection.current!.setLocalDescription(offer);
+//         socket.emit("offer", { to: partnerId, offer });
+//       }
+//     });
+
+//     socket.on("offer", async ({ from, offer }) => {
+//       await createPeerConnection(from);
+//       await peerConnection.current!.setRemoteDescription(new RTCSessionDescription(offer));
+//       const answer = await peerConnection.current!.createAnswer();
+//       await peerConnection.current!.setLocalDescription(answer);
+//       socket.emit("answer", { to: from, answer });
+//     });
+
+//     socket.on("answer", async ({ answer }) => {
+//       await peerConnection.current!.setRemoteDescription(new RTCSessionDescription(answer));
+//     });
+
+//     socket.on("ice-candidate", async ({ candidate }) => {
+//       try {
+//         await peerConnection.current?.addIceCandidate(candidate);
+//       } catch (err) {
+//         console.error(err);
+//       }
+//     });
+
+//     socket.on("partner-disconnected", () => {
+//       cleanupConnection();
+//       setStatus("Stranger left the chat");
+//       setIsConnected(false);
+//       setIsSearching(false);
+//     });
+
+//     socket.on("requeue", () => {
+//       findStranger();
+//     });
+
+//     return () => {
+//       socket.off("online-count");
+//       socket.off("matched");
+//       socket.off("offer");
+//       socket.off("answer");
+//       socket.off("ice-candidate");
+//       socket.off("partner-disconnected");
+//       socket.off("requeue");
+//       socket.disconnect();
+//     };
+//   }, []);
+
+//   async function startCamera() {
+//     try {
+//       const stream = await navigator.mediaDevices.getUserMedia({
+//         video: true,
+//         audio: true,
+//       });
+//       localStream.current = stream;
+//       if (localVideo.current) {
+//         localVideo.current.srcObject = stream;
+//       }
+//     } catch (err) {
+//       console.error("Error accessing media devices.", err);
+//     }
+//   }
+
+//   async function createPeerConnection(partner: string) {
+//     cleanupConnection();
+
+//     const pc = new RTCPeerConnection({
+//       iceServers: [
+//         { urls: "stun:stun.relay.metered.ca:80" },
+//         { urls: "turn:global.relay.metered.ca:80", username: "a5a42f645ba0512bed56761a", credential: "o1LXCnRP7WhB0p2J" },
+//         { urls: "turn:global.relay.metered.ca:80?transport=tcp", username: "a5a42f645ba0512bed56761a", credential: "o1LXCnRP7WhB0p2J" },
+//         { urls: "turn:global.relay.metered.ca:443", username: "a5a42f645ba0512bed56761a", credential: "o1LXCnRP7WhB0p2J" },
+//         { urls: "turns:global.relay.metered.ca:443?transport=tcp", username: "a5a42f645ba0512bed56761a", credential: "o1LXCnRP7WhB0p2J" },
+//       ],
+//       iceTransportPolicy: "all",
+//     });
+
+//     peerConnection.current = pc;
+
+//     localStream.current?.getTracks().forEach((track) => {
+//       pc.addTrack(track, localStream.current!);
+//     });
+
+//     pc.ontrack = (event) => {
+//       if (remoteVideo.current) {
+//         remoteVideo.current.srcObject = event.streams[0];
+//       }
+//     };
+
+//     pc.onicecandidate = (event) => {
+//       if (event.candidate) {
+//         socket.emit("ice-candidate", {
+//           to: partner,
+//           candidate: event.candidate,
+//         });
+//       }
+//     };
+//   }
+
+//   function cleanupConnection() {
+//     if (peerConnection.current) {
+//       peerConnection.current.close();
+//       peerConnection.current = null;
+//     }
+//     if (remoteVideo.current) {
+//       remoteVideo.current.srcObject = null;
+//     }
+//   }
+
+//   function findStranger() {
+//     setStatus("Searching for a partner...");
+//     setIsSearching(true);
+//     socket.emit("find-stranger");
+//   }
+
+//   function nextStranger() {
+//     cleanupConnection();
+//     setStatus("Finding next stranger...");
+//     setIsConnected(false);
+//     setIsSearching(true);
+//     socket.emit("next-stranger");
+//   }
+
+//   function toggleMute() {
+//     if (!localStream.current) return;
+//     localStream.current.getAudioTracks().forEach((track) => {
+//       track.enabled = !track.enabled;
+//     });
+//     setIsMuted((prev) => !prev);
+//   }
+
+//   function toggleCamera() {
+//     if (!localStream.current) return;
+//     localStream.current.getVideoTracks().forEach((track) => {
+//       track.enabled = !track.enabled;
+//     });
+//     setIsCameraOff((prev) => !prev);
+//   }
+
+//   return (
+//     <main className="min-h-screen bg-background text-foreground flex flex-col antialiased">
+//       {/* HEADER BAR */}
+//       <header className="border-b border-border bg-background/50 backdrop-blur-md sticky top-0 z-50 px-6 h-16 flex items-center justify-between">
+//         <div className="flex items-center gap-2.5">
+//           <div className="bg-primary/10 p-2 rounded-xl text-primary border">
+//             <Radio className="size-5 animate-pulse" />
+//           </div>
+//           <div>
+//             <h1 className="text-base font-semibold tracking-tight flex items-center gap-1.5">
+//               Campus Connection <span className="text-xs font-normal text-muted-foreground">v2.0</span>
+//             </h1>
+//           </div>
+//         </div>
+
+//         <Badge variant="secondary" className="gap-1.5 px-3 py-1 bg-muted text-muted-foreground border border-border rounded-full font-normal">
+//           <Users className="size-3.5 text-emerald-500" />
+//           <span className="font-medium text-foreground">{onlineCount}</span> peers online
+//         </Badge>
+//       </header>
+
+//       {/* CORE FRAME LAYOUT */}
+//       <div className="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-4 gap-6 items-stretch">
+        
+//         {/* VIDEO DISPLAY SUITE */}
+//         <div className="lg:col-span-3 flex flex-col gap-4">
+//           <Card className="bg-muted/30 border-border overflow-hidden relative flex-1 min-h-[450px] md:min-h-[580px] rounded-2xl shadow-md">
+//             <CardContent className="p-0 h-full w-full relative">
+              
+//               {/* REMOTE STRANGER VIDEO SCREEN */}
+//               <video
+//                 ref={remoteVideo}
+//                 autoPlay
+//                 playsInline
+//                 className="absolute inset-0 h-full w-full object-cover bg-muted"
+//               />
+
+//               {/* SEARCHING / DISCONNECTED STATE LAYOUT */}
+//               {!isConnected && (
+//                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/95 z-20 transition-all">
+//                   <div className="text-center p-6 max-w-sm">
+//                     <div className="mx-auto mb-5 h-14 w-14 rounded-2xl bg-muted border border-border flex items-center justify-center shadow-sm">
+//                       {isSearching ? (
+//                         <Loader2 className="size-6 text-primary animate-spin" />
+//                       ) : (
+//                         <Sparkles className="size-6 text-muted-foreground" />
+//                       )}
+//                     </div>
+//                     <h3 className="text-lg font-medium text-foreground mb-1">
+//                       {isSearching ? "Searching the Grid..." : "Ready to Match?"}
+//                     </h3>
+//                     <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+//                       {isSearching 
+//                         ? "Hang tight, matching you with another verified student active on campus right now." 
+//                         : "Click find stranger below to establish a secure video feed instantly."}
+//                     </p>
+//                   </div>
+//                 </div>
+//               )}
+
+//               {/* FLOATING LOCAL USER PREVIEW PIN */}
+//               <div className="absolute bottom-4 right-4 w-32 h-44 sm:w-44 sm:h-56 rounded-xl overflow-hidden border border-border bg-background shadow-lg z-30 group transition-all">
+//                 <video
+//                   ref={localVideo}
+//                   autoPlay
+//                   muted
+//                   playsInline
+//                   className="h-full w-full object-cover scale-x-[-1]"
+//                 />
+//                 <div className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-background/80 text-[10px] font-medium backdrop-blur-sm border border-border text-foreground">
+//                   You
+//                 </div>
+//                 {isCameraOff && (
+//                   <div className="absolute inset-0 bg-muted flex items-center justify-center">
+//                     <VideoOff className="size-5 text-muted-foreground/60" />
+//                   </div>
+//                 )}
+//               </div>
+
+//               {/* FLOATING HUD BADGE STATUS */}
+//               <div className="absolute top-4 left-4 z-30">
+//                 <Badge className={`px-3 py-1 font-medium select-none shadow-sm backdrop-blur-md rounded-lg bg-background/90 text-foreground border-border`} variant="outline">
+//                   <span className={`h-1.5 w-1.5 rounded-full mr-2 ${isConnected ? 'bg-emerald-500 animate-pulse' : 'bg-muted-foreground'}`} />
+//                   {isConnected ? "Live Session" : "Secured Stream"}
+//                 </Badge>
+//               </div>
+
+//             </CardContent>
+//           </Card>
+//         </div>
+
+//         {/* CONTROLS & MONITOR SIDEBAR */}
+//         <div className="lg:col-span-1 flex flex-col justify-between gap-4">
+//           <Card className="bg-card border-border p-5 rounded-2xl flex flex-col justify-between h-full shadow-sm">
+//             <div className="space-y-5">
+//               <div>
+//                 <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider block mb-1">
+//                   Session Log Monitor
+//                 </span>
+//                 <div className="text-xs bg-muted border border-border p-3 rounded-xl min-h-[60px] font-mono text-muted-foreground leading-snug">
+//                   {status}
+//                 </div>
+//               </div>
+
+//               <Separator className="bg-border" />
+
+//               {/* CORE ENGAGEMENT CONTROLS */}
+//               <div className="space-y-2.5">
+//                 <Button
+//                   onClick={findStranger}
+//                   disabled={isSearching || isConnected}
+//                   className="w-full h-11 text-sm font-medium rounded-xl gap-2 shadow-sm transition-transform active:scale-[0.98]"
+//                 >
+//                   <UserPlus className="size-4" />
+//                   Find Stranger
+//                 </Button>
+
+//                 <Button
+//                   onClick={nextStranger}
+//                   disabled={!isConnected && !isSearching}
+//                   variant="destructive"
+//                   className="w-full h-11 text-sm font-medium rounded-xl gap-2 shadow-sm transition-transform active:scale-[0.98]"
+//                 >
+//                   Skip Partner
+//                   <ArrowRight className="size-4" />
+//                 </Button>
+//               </div>
+//             </div>
+
+//             {/* HARDWARE DEVICE CONTROLS CONTAINER */}
+//             <div className="pt-4 lg:pt-0">
+//               <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider block mb-2.5">
+//                 Hardware Device Access
+//               </span>
+//               <div className="grid grid-cols-2 gap-2">
+//                 <Button
+//                   variant={isMuted ? "outline" : "secondary"}
+//                   onClick={toggleMute}
+//                   className={`h-11 rounded-xl text-xs font-medium border transition-colors ${
+//                     isMuted ? "border-amber-500/50 text-amber-600 bg-amber-50/50 hover:bg-amber-100/50" : ""
+//                   }`}
+//                 >
+//                   {isMuted ? <MicOff className="size-3.5 mr-1.5" /> : <Mic className="size-3.5 mr-1.5" />}
+//                   {isMuted ? "Muted" : "Mute"}
+//                 </Button>
+
+//                 <Button
+//                   variant={isCameraOff ? "outline" : "secondary"}
+//                   onClick={toggleCamera}
+//                   className={`h-11 rounded-xl text-xs font-medium border transition-colors ${
+//                     isCameraOff ? "border-amber-500/50 text-amber-600 bg-amber-50/50 hover:bg-amber-100/50" : ""
+//                   }`}
+//                 >
+//                   {isCameraOff ? <VideoOff className="size-3.5 mr-1.5" /> : <Video className="size-3.5 mr-1.5" />}
+//                   {isCameraOff ? "Off" : "Video"}
+//                 </Button>
+//               </div>
+//             </div>
+//           </Card>
+//         </div>
+
+//       </div>
+//     </main>
+//   );
+// }
+
+// "use client";
+
+// import { useEffect, useRef, useState } from "react";
+// import { io } from "socket.io-client";
+// import { 
+//   Video, 
+//   VideoOff, 
+//   Mic, 
+//   MicOff, 
+//   UserPlus, 
+//   ArrowRight, 
+//   Users, 
+//   Radio, 
+//   Loader2, 
+//   Sparkles 
+// } from "lucide-react";
+// import { Button } from "@/components/ui/button";
+// import { Card, CardContent } from "@/components/ui/card";
+// import { Badge } from "@/components/ui/badge";
+// import { Separator } from "@/components/ui/separator";
+
+// const socket = io("https://video-chat-server-b3zd.onrender.com");
+
+// export default function Home() {
+//   const localVideo = useRef<HTMLVideoElement>(null);
+//   const remoteVideo = useRef<HTMLVideoElement>(null);
+//   const peerConnection = useRef<RTCPeerConnection | null>(null);
+//   const localStream = useRef<MediaStream | null>(null);
+
+//   const [partnerId, setPartnerId] = useState("");
+//   const [status, setStatus] = useState("Idle");
+//   const [isSearching, setIsSearching] = useState(false);
+//   const [isConnected, setIsConnected] = useState(false);
+//   const [onlineCount, setOnlineCount] = useState(0);
+//   const [isMuted, setIsMuted] = useState(false);
+//   const [isCameraOff, setIsCameraOff] = useState(false);
+
+//   useEffect(() => {
+//     startCamera();
+
+//     socket.on("online-count", (count) => {
+//       setOnlineCount(count);
+//     });
+
+//     socket.on("matched", async ({ partnerId, initiator }) => {
+//       setStatus("Matched with a stranger");
+//       setIsSearching(false);
+//       setIsConnected(true);
+//       setPartnerId(partnerId);
+
+//       await createPeerConnection(partnerId);
+
+//       if (initiator) {
+//         const offer = await peerConnection.current!.createOffer();
+//         await peerConnection.current!.setLocalDescription(offer);
+//         socket.emit("offer", { to: partnerId, offer });
+//       }
+//     });
+
+//     socket.on("offer", async ({ from, offer }) => {
+//       await createPeerConnection(from);
+//       await peerConnection.current!.setRemoteDescription(new RTCSessionDescription(offer));
+//       const answer = await peerConnection.current!.createAnswer();
+//       await peerConnection.current!.setLocalDescription(answer);
+//       socket.emit("answer", { to: from, answer });
+//     });
+
+//     socket.on("answer", async ({ answer }) => {
+//       await peerConnection.current!.setRemoteDescription(new RTCSessionDescription(answer));
+//     });
+
+//     socket.on("ice-candidate", async ({ candidate }) => {
+//       try {
+//         await peerConnection.current?.addIceCandidate(candidate);
+//       } catch (err) {
+//         console.error(err);
+//       }
+//     });
+
+//     socket.on("partner-disconnected", () => {
+//       cleanupConnection();
+//       setStatus("Stranger left the chat");
+//       setIsConnected(false);
+//       setIsSearching(false);
+//     });
+
+//     socket.on("requeue", () => {
+//       findStranger();
+//     });
+
+//     return () => {
+//       socket.off("online-count");
+//       socket.off("matched");
+//       socket.off("offer");
+//       socket.off("answer");
+//       socket.off("ice-candidate");
+//       socket.off("partner-disconnected");
+//       socket.off("requeue");
+//       socket.disconnect();
+//     };
+//   }, []);
+
+//   async function startCamera() {
+//     try {
+//       const stream = await navigator.mediaDevices.getUserMedia({
+//         video: true,
+//         audio: true,
+//       });
+//       localStream.current = stream;
+//       if (localVideo.current) {
+//         localVideo.current.srcObject = stream;
+//       }
+//     } catch (err) {
+//       console.error("Error accessing media devices.", err);
+//     }
+//   }
+
+//   async function createPeerConnection(partner: string) {
+//     cleanupConnection();
+
+//     const pc = new RTCPeerConnection({
+//       iceServers: [
+//         { urls: "stun:stun.relay.metered.ca:80" },
+//         { urls: "turn:global.relay.metered.ca:80", username: "a5a42f645ba0512bed56761a", credential: "o1LXCnRP7WhB0p2J" },
+//         { urls: "turn:global.relay.metered.ca:80?transport=tcp", username: "a5a42f645ba0512bed56761a", credential: "o1LXCnRP7WhB0p2J" },
+//         { urls: "turn:global.relay.metered.ca:443", username: "a5a42f645ba0512bed56761a", credential: "o1LXCnRP7WhB0p2J" },
+//         { urls: "turns:global.relay.metered.ca:443?transport=tcp", username: "a5a42f645ba0512bed56761a", credential: "o1LXCnRP7WhB0p2J" },
+//       ],
+//       iceTransportPolicy: "all",
+//     });
+
+//     peerConnection.current = pc;
+
+//     localStream.current?.getTracks().forEach((track) => {
+//       pc.addTrack(track, localStream.current!);
+//     });
+
+//     pc.ontrack = (event) => {
+//       if (remoteVideo.current) {
+//         remoteVideo.current.srcObject = event.streams[0];
+//       }
+//     };
+
+//     pc.onicecandidate = (event) => {
+//       if (event.candidate) {
+//         socket.emit("ice-candidate", {
+//           to: partner,
+//           candidate: event.candidate,
+//         });
+//       }
+//     };
+//   }
+
+//   function cleanupConnection() {
+//     if (peerConnection.current) {
+//       peerConnection.current.close();
+//       peerConnection.current = null;
+//     }
+//     if (remoteVideo.current) {
+//       remoteVideo.current.srcObject = null;
+//     }
+//   }
+
+//   function findStranger() {
+//     setStatus("Searching for a partner...");
+//     setIsSearching(true);
+//     socket.emit("find-stranger");
+//   }
+
+//   function nextStranger() {
+//     cleanupConnection();
+//     setStatus("Finding next stranger...");
+//     setIsConnected(false);
+//     setIsSearching(true);
+//     socket.emit("next-stranger");
+//   }
+
+//   function toggleMute() {
+//     if (!localStream.current) return;
+//     localStream.current.getAudioTracks().forEach((track) => {
+//       track.enabled = !track.enabled;
+//     });
+//     setIsMuted((prev) => !prev);
+//   }
+
+//   function toggleCamera() {
+//     if (!localStream.current) return;
+//     localStream.current.getVideoTracks().forEach((track) => {
+//       track.enabled = !track.enabled;
+//     });
+//     setIsCameraOff((prev) => !prev);
+//   }
+
+//   return (
+//     <main className="min-h-screen bg-zinc-950 text-zinc-50 flex flex-col antialiased">
+//       {/* HEADER BAR */}
+//       <header className="border-b border-zinc-900 bg-zinc-950/50 backdrop-blur-md sticky top-0 z-50 px-6 h-16 flex items-center justify-between">
+//         <div className="flex items-center gap-2.5">
+//           <div className="bg-primary/10 p-2 rounded-xl text-primary border border-primary/20">
+//             <Radio className="size-5 animate-pulse" />
+//           </div>
+//           <div>
+//             <h1 className="text-base font-semibold tracking-tight flex items-center gap-1.5">
+//               Campus Connection <span className="text-xs font-normal text-muted-foreground">v2.0</span>
+//             </h1>
+//           </div>
+//         </div>
+
+//         <Badge variant="secondary" className="gap-1.5 px-3 py-1 bg-zinc-900 text-zinc-400 border border-zinc-800 rounded-full font-normal">
+//           <Users className="size-3.5 text-emerald-500" />
+//           <span className="font-medium text-zinc-200">{onlineCount}</span> peers online
+//         </Badge>
+//       </header>
+
+//       {/* CORE FRAME LAYOUT */}
+//       <div className="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-4 gap-6 items-stretch">
+        
+//         {/* VIDEO DISPLAY SUITE (Takes up 3 blocks out of 4) */}
+//         <div className="lg:col-span-3 flex flex-col gap-4">
+//           <Card className="bg-zinc-900/40 border-zinc-900 overflow-hidden relative flex-1 min-h-[450px] md:min-h-[580px] rounded-2xl shadow-2xl backdrop-blur-sm">
+//             <CardContent className="p-0 h-full w-full relative">
+              
+//               {/* REMOTE STRANGER VIDEO SCREEN */}
+//               <video
+//                 ref={remoteVideo}
+//                 autoPlay
+//                 playsInline
+//                 muted={false}
+//                 className="absolute inset-0 h-full w-full object-cover bg-zinc-950"
+//               />
+
+//               {/* SEARCHING / DISCONNECTED STATE LAYOUT */}
+//               {!isConnected && (
+//                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-950/90 z-20 transition-all">
+//                   <div className="text-center p-6 max-w-sm">
+//                     <div className="mx-auto mb-5 h-14 w-14 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center shadow-xl">
+//                       {isSearching ? (
+//                         <Loader2 className="size-6 text-primary animate-spin" />
+//                       ) : (
+//                         <Sparkles className="size-6 text-zinc-500" />
+//                       )}
+//                     </div>
+//                     <h3 className="text-lg font-medium text-zinc-200 mb-1">
+//                       {isSearching ? "Searching the Grid..." : "Ready to Match?"}
+//                     </h3>
+//                     <p className="text-sm text-zinc-500 leading-relaxed mb-6">
+//                       {isSearching 
+//                         ? "Hang tight, matching you with another verified student active on campus right now." 
+//                         : "Click find stranger below to establish an encrypted video feed instantly."}
+//                     </p>
+//                   </div>
+//                 </div>
+//               )}
+
+//               {/* FLOATING LOCAL USER PREVIEW PIN (Omegle/Zoom Style overlay) */}
+//               <div className="absolute bottom-4 right-4 w-32 h-44 sm:w-44 sm:h-56 rounded-xl overflow-hidden border border-zinc-800/80 bg-zinc-950 shadow-2xl z-30 group transition-all">
+//                 <video
+//                   ref={localVideo}
+//                   autoPlay
+//                   muted
+//                   playsInline
+//                   className="h-full w-full object-cover scale-x-[-1]"
+//                 />
+//                 <div className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-black/60 text-[10px] font-medium backdrop-blur-md text-zinc-300">
+//                   You
+//                 </div>
+//                 {isCameraOff && (
+//                   <div className="absolute inset-0 bg-zinc-900 flex items-center justify-center">
+//                     <VideoOff className="size-5 text-zinc-600" />
+//                   </div>
+//                 )}
+//               </div>
+
+//               {/* FLOATING HUD BADGE STATUS */}
+//               <div className="absolute top-4 left-4 z-30">
+//                 <Badge className={`px-3 py-1 font-medium select-none shadow-md backdrop-blur-md rounded-lg ${
+//                   isConnected 
+//                     ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" 
+//                     : "bg-zinc-950/60 text-zinc-400 border-zinc-800"
+//                 }`} variant="outline">
+//                   <span className={`h-1.5 w-1.5 rounded-full mr-2 ${isConnected ? 'bg-emerald-400 animate-pulse' : 'bg-zinc-600'}`} />
+//                   {isConnected ? "Live Session" : "Encrypted Stream Target"}
+//                 </Badge>
+//               </div>
+
+//             </CardContent>
+//           </Card>
+//         </div>
+
+//         {/* CONTROLS & MONITOR SIDEBAR (Takes up 1 block out of 4) */}
+//         <div className="lg:col-span-1 flex flex-col justify-between gap-4">
+//           <Card className="bg-zinc-900/20 border-zinc-900 p-5 rounded-2xl flex flex-col justify-between h-full backdrop-blur-sm">
+//             <div className="space-y-5">
+//               <div>
+//                 <span className="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider block mb-1">
+//                   Session Log Monitor
+//                 </span>
+//                 <div className="text-xs bg-zinc-950 border border-zinc-900 p-3 rounded-xl min-h-[60px] font-mono text-zinc-400 leading-snug">
+//                   {status}
+//                 </div>
+//               </div>
+
+//               <Separator className="bg-zinc-900" />
+
+//               {/* CORE ENGAGEMENT CONTROLS */}
+//               <div className="space-y-2.5">
+//                 <Button
+//                   onClick={findStranger}
+//                   disabled={isSearching || isConnected}
+//                   className="w-full h-11 text-sm font-medium rounded-xl gap-2 shadow-lg shadow-primary/10 transition-transform active:scale-[0.98]"
+//                 >
+//                   <UserPlus className="size-4" />
+//                   Find Stranger
+//                 </Button>
+
+//                 <Button
+//                   onClick={nextStranger}
+//                   disabled={!isConnected && !isSearching}
+//                   variant="destructive"
+//                   className="w-full h-11 text-sm font-medium rounded-xl gap-2 shadow-lg shadow-destructive/5 transition-transform active:scale-[0.98]"
+//                 >
+//                   Skip Partner
+//                   <ArrowRight className="size-4" />
+//                 </Button>
+//               </div>
+//             </div>
+
+//             {/* HARDWARE DEVICE CONTROLS CONTAINER */}
+//             <div className="pt-4 lg:pt-0">
+//               <span className="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider block mb-2.5">
+//                 Hardware Device Access
+//               </span>
+//               <div className="grid grid-cols-2 gap-2">
+//                 <Button
+//                   variant="secondary"
+//                   onClick={toggleMute}
+//                   className={`h-11 rounded-xl text-xs font-medium border transition-colors ${
+//                     isMuted 
+//                       ? "bg-amber-500/10 text-amber-400 border-amber-500/20 hover:bg-amber-500/20" 
+//                       : "bg-zinc-900 text-zinc-300 border-zinc-800 hover:bg-zinc-800"
+//                   }`}
+//                 >
+//                   {isMuted ? <MicOff className="size-3.5 mr-1.5 text-amber-400" /> : <Mic className="size-3.5 mr-1.5" />}
+//                   {isMuted ? "Muted" : "Mute"}
+//                 </Button>
+
+//                 <Button
+//                   variant="secondary"
+//                   onClick={toggleCamera}
+//                   className={`h-11 rounded-xl text-xs font-medium border transition-colors ${
+//                     isCameraOff 
+//                       ? "bg-amber-500/10 text-amber-400 border-amber-500/20 hover:bg-amber-500/20" 
+//                       : "bg-zinc-900 text-zinc-300 border-zinc-800 hover:bg-zinc-800"
+//                   }`}
+//                 >
+//                   {isCameraOff ? <VideoOff className="size-3.5 mr-1.5 text-amber-400" /> : <Video className="size-3.5 mr-1.5" />}
+//                   {isCameraOff ? "Video Off" : "Video"}
+//                 </Button>
+//               </div>
+//             </div>
+//           </Card>
+//         </div>
+
+//       </div>
+//     </main>
+//   );
+// }
+
+// "use client";
+
+// import { useEffect, useRef, useState } from "react";
+// import { io } from "socket.io-client";
+
+// // const socket = io();
+// // const socket = io("https://video-chat-server-b3zd.onrender.com/");
+
+// // const socket = io("https://video-chat-server-b3zd.onrender.com", {
+// //   transports: ["websocket"],
+// // });
+
+// const socket = io("https://video-chat-server-b3zd.onrender.com");
+
+// export default function Home() {
+//   const localVideo = useRef<HTMLVideoElement>(null);
+//   const remoteVideo = useRef<HTMLVideoElement>(null);
+
+//   const peerConnection = useRef<RTCPeerConnection | null>(null);
+
+//   const localStream = useRef<MediaStream | null>(null);
+
+//   const [partnerId, setPartnerId] = useState("");
+//   const [status, setStatus] = useState("Idle");
+//   const [isSearching, setIsSearching] = useState(false);
+//   const [isConnected, setIsConnected] = useState(false);
+//   const [onlineCount, setOnlineCount] = useState(0);
+//   const [isMuted, setIsMuted] = useState(false);
+//   const [isCameraOff, setIsCameraOff] = useState(false);
+
+//   useEffect(() => {
+//     startCamera();
+
+//     socket.on("online-count", (count) => {
+//       setOnlineCount(count);
+//     });
+
+//     socket.on("matched", async ({ partnerId, initiator }) => {
+//       setStatus("Matched");
+
+//       setIsSearching(false);
+//       setIsConnected(true);
+
+//       setPartnerId(partnerId);
+
+//       await createPeerConnection(partnerId);
+
+//       if (initiator) {
+//         const offer = await peerConnection.current!.createOffer();
+
+//         await peerConnection.current!.setLocalDescription(offer);
+
+//         socket.emit("offer", {
+//           to: partnerId,
+//           offer,
+//         });
+//       }
+//     });
+
+//     socket.on("offer", async ({ from, offer }) => {
+//       await createPeerConnection(from);
+
+//       await peerConnection.current!.setRemoteDescription(
+//         new RTCSessionDescription(offer),
+//       );
+
+//       const answer = await peerConnection.current!.createAnswer();
+
+//       await peerConnection.current!.setLocalDescription(answer);
+
+//       socket.emit("answer", {
+//         to: from,
+//         answer,
+//       });
+//     });
+
+//     socket.on("answer", async ({ answer }) => {
+//       await peerConnection.current!.setRemoteDescription(
+//         new RTCSessionDescription(answer),
+//       );
+//     });
+
+//     socket.on("ice-candidate", async ({ candidate }) => {
+//       try {
+//         await peerConnection.current?.addIceCandidate(candidate);
+//       } catch (err) {
+//         console.error(err);
+//       }
+//     });
+
+//     socket.on("partner-disconnected", () => {
+//       cleanupConnection();
+//       setStatus("Partner disconnected");
+
+//       setIsConnected(false);
+//       setIsSearching(false);
+//     });
+
+//     socket.on("requeue", () => {
+//       findStranger();
+//     });
+
+//     return () => {
+//       socket.off("online-count");
+//       socket.off("matched");
+//       socket.off("offer");
+//       socket.off("answer");
+//       socket.off("ice-candidate");
+//       socket.off("partner-disconnected");
+//       socket.off("requeue");
+
+//       socket.disconnect();
+//     };
+//   }, []);
+
+//   async function startCamera() {
+//     const stream = await navigator.mediaDevices.getUserMedia({
+//       video: true,
+//       audio: true,
+//     });
+
+//     localStream.current = stream;
+
+//     if (localVideo.current) {
+//       localVideo.current.srcObject = stream;
+//     }
+//   }
+
+//   async function createPeerConnection(partner: string) {
+//     cleanupConnection();
+
+//     // const pc = new RTCPeerConnection({
+//     //   iceServers: [
+//     //     {
+//     //       urls: "stun:stun.l.google.com:19302",
+//     //     },
+//     //     {
+//     //       urls: "turn:openrelay.metered.ca:80",
+//     //       username: "openrelayproject",
+//     //       credential: "openrelayproject",
+//     //     },
+//     //     {
+//     //       urls: "turn:openrelay.metered.ca:443",
+//     //       username: "openrelayproject",
+//     //       credential: "openrelayproject",
+//     //     },
+//     //   ],
+//     // });
+
+//     const pc = new RTCPeerConnection({
+//       iceServers: [
+//         {
+//           urls: "stun:stun.relay.metered.ca:80",
+//         },
+
+//         {
+//           urls: "turn:global.relay.metered.ca:80",
+//           username: "a5a42f645ba0512bed56761a",
+//           credential: "o1LXCnRP7WhB0p2J",
+//         },
+
+//         {
+//           urls: "turn:global.relay.metered.ca:80?transport=tcp",
+//           username: "a5a42f645ba0512bed56761a",
+//           credential: "o1LXCnRP7WhB0p2J",
+//         },
+
+//         {
+//           urls: "turn:global.relay.metered.ca:443",
+//           username: "a5a42f645ba0512bed56761a",
+//           credential: "o1LXCnRP7WhB0p2J",
+//         },
+
+//         {
+//           urls: "turns:global.relay.metered.ca:443?transport=tcp",
+//           username: "a5a42f645ba0512bed56761a",
+//           credential: "o1LXCnRP7WhB0p2J",
+//         },
+//       ],
+
+//       iceTransportPolicy: "all",
+//     });
+
+//     pc.oniceconnectionstatechange = () => {
+//       console.log("ICE STATE:", pc.iceConnectionState);
+//     };
+
+//     pc.onconnectionstatechange = () => {
+//       console.log("CONNECTION STATE:", pc.connectionState);
+//     };
+
+//     peerConnection.current = pc;
+
+//     localStream.current?.getTracks().forEach((track) => {
+//       pc.addTrack(track, localStream.current!);
+//     });
+
+//     pc.ontrack = (event) => {
+//       if (remoteVideo.current) {
+//         remoteVideo.current.srcObject = event.streams[0];
+//       }
+//     };
+
+//     pc.onicecandidate = (event) => {
+//       if (event.candidate) {
+//         socket.emit("ice-candidate", {
+//           to: partner,
+//           candidate: event.candidate,
+//         });
+//       }
+//     };
+//   }
+
+//   function cleanupConnection() {
+//     if (peerConnection.current) {
+//       peerConnection.current.close();
+//       peerConnection.current = null;
+//     }
+
+//     if (remoteVideo.current) {
+//       remoteVideo.current.srcObject = null;
+//     }
+//   }
+
+//   function findStranger() {
+//     setStatus("Searching...");
+//     setIsSearching(true);
+//     socket.emit("find-stranger");
+//   }
+
+//   function nextStranger() {
+//     cleanupConnection();
+//     setStatus("Finding next stranger...");
+//     setIsConnected(false);
+//     setIsSearching(true);
+//     socket.emit("next-stranger");
+//   }
+
+//   function toggleMute() {
+//     if (!localStream.current) return;
+
+//     localStream.current.getAudioTracks().forEach((track) => {
+//       track.enabled = !track.enabled;
+//     });
+
+//     setIsMuted((prev) => !prev);
+//   }
+
+//   function toggleCamera() {
+//     if (!localStream.current) return;
+
+//     localStream.current.getVideoTracks().forEach((track) => {
+//       track.enabled = !track.enabled;
+//     });
+
+//     setIsCameraOff((prev) => !prev);
+//   }
+
+//   return (
+//     <main className="min-h-screen bg-black text-white flex items-center justify-center p-4">
+//       <div className="w-full max-w-6xl">
+//         {/* Header */}
+//         <div className="mb-8 text-center">
+//           <h1 className="text-4xl md:text-5xl font-black tracking-tight">
+//             Campus Video Chat
+//           </h1>
+
+//           <p className="mt-3 text-zinc-400 text-sm md:text-base">
+//             Meet random people around campus instantly
+//           </p>
+//         </div>
+
+//         <div className="flex items-center gap-3">
+//           <div className="h-3 w-3 rounded-full bg-green-500 animate-pulse" />
+
+//           <p className="text-sm text-zinc-400">{onlineCount} online</p>
+//         </div>
+
+//         {/* Video Section */}
+//         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+//           {/* Local Video */}
+//           <div className="relative overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-950 shadow-2xl">
+//             <video
+//               ref={localVideo}
+//               autoPlay
+//               muted
+//               playsInline
+//               className="h-[260px] md:h-[500px] w-full object-cover"
+//             />
+
+//             <div className="absolute left-4 top-4 rounded-full bg-black/60 px-4 py-2 backdrop-blur-md">
+//               <p className="text-sm font-medium">You</p>
+//             </div>
+//           </div>
+
+//           {/* Remote Video */}
+//           <div className="relative overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-950 shadow-2xl">
+//             <video
+//               ref={remoteVideo}
+//               autoPlay
+//               playsInline
+//               muted={false}
+//               className="h-[260px] md:h-[500px] w-full object-cover"
+//             />
+
+//             {!isConnected && (
+//               <div className="absolute inset-0 flex items-center justify-center">
+//                 <div className="text-center">
+//                   <div className="mx-auto mb-4 h-16 w-16 animate-pulse rounded-full bg-zinc-800" />
+
+//                   <p className="text-zinc-400">
+//                     {isSearching
+//                       ? "Searching for stranger..."
+//                       : "No stranger connected"}
+//                   </p>
+//                 </div>
+//               </div>
+//             )}
+
+//             <div className="absolute right-4 top-4 rounded-full bg-black/60 px-4 py-2 backdrop-blur-md">
+//               <p className="text-sm font-medium">
+//                 {isConnected ? "Connected" : "Waiting"}
+//               </p>
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* Bottom Controls */}
+//         <div className="mt-8 flex flex-col items-center justify-center gap-5">
+//           {/* Status */}
+//           <div className="rounded-full border border-zinc-800 bg-zinc-900/70 px-5 py-2 backdrop-blur-md">
+//             <p className="text-sm text-zinc-300">{status}</p>
+//           </div>
+
+//           {/* Buttons */}
+          
+
+//           <div className="flex flex-wrap items-center justify-center gap-4">
+//             <button
+//               onClick={findStranger}
+//               disabled={isSearching || isConnected}
+//               className={`rounded-2xl px-8 py-4 text-sm font-semibold transition-all duration-200 ${
+//                 isSearching || isConnected
+//                   ? "cursor-not-allowed bg-zinc-800 text-zinc-500"
+//                   : "bg-white text-black hover:scale-105 hover:bg-zinc-200 active:scale-95"
+//               }`}
+//             >
+//               Find Stranger
+//             </button>
+
+//             <button
+//               onClick={nextStranger}
+//               disabled={!isConnected}
+//               className={`rounded-2xl px-8 py-4 text-sm font-semibold transition-all duration-200 ${
+//                 !isConnected
+//                   ? "cursor-not-allowed bg-zinc-800 text-zinc-500"
+//                   : "bg-red-500 text-white hover:scale-105 hover:bg-red-400 active:scale-95"
+//               }`}
+//             >
+//               Next Stranger
+//             </button>
+
+//             <button
+//               onClick={toggleMute}
+//               className={`rounded-2xl px-6 py-4 text-sm font-semibold transition-all duration-200 ${
+//                 isMuted
+//                   ? "bg-yellow-500 text-black"
+//                   : "bg-zinc-800 text-white hover:bg-zinc-700"
+//               }`}
+//             >
+//               {isMuted ? "Unmute Mic" : "Mute Mic"}
+//             </button>
+
+//             <button
+//               onClick={toggleCamera}
+//               className={`rounded-2xl px-6 py-4 text-sm font-semibold transition-all duration-200 ${
+//                 isCameraOff
+//                   ? "bg-yellow-500 text-black"
+//                   : "bg-zinc-800 text-white hover:bg-zinc-700"
+//               }`}
+//             >
+//               {isCameraOff ? "Turn Camera On" : "Turn Camera Off"}
+//             </button>
+//           </div>
+//         </div>
+//       </div>
+//     </main>
+//   );
+// }
+
+// "use client";
+
+// // app/page.js
+
+// export default function Home() {
+//   return (
+//     <div className=" min-h-screen px-6 py-12 font-sans md:px-12 md:py-20 lg:px-24 lg:py-0 text-slate-400 bg-[#0f172a]">
+//       {/* Main Container turning into a 2-column layout on Desktop */}
+//       <div className="lg:flex lg:justify-between lg:gap-4">
+//         {/* LEFT COLUMN: Fixed/Sticky Header & Navigation */}
+//         <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24">
+//           <div>
+//             {/* Hero / Identity Intro */}
+//             <h1 className="text-4xl font-bold tracking-tight text-slate-200 sm:text-5xl">
+//               <a href="/">Your Name</a>
+//             </h1>
+//             <h2 className="mt-3 text-lg font-medium tracking-tight text-slate-200 sm:text-xl">
+//               Junior Full-Stack Developer
+//             </h2>
+//             <p className="mt-4 max-w-xs leading-normal text-sm">
+//               I build accessible, pixel-perfect digital products and web
+//               experiences.
+//             </p>
+
+//             {/* Sticky Sidebar Navigation (Hidden on mobile, showing on desktop) */}
+//             <nav className="nav hidden lg:block mt-16">
+//               <ul className="w-max">
+//                 <li>
+//                   <a
+//                     className="group flex items-center py-3 active"
+//                     href="#about"
+//                   >
+//                     <span className="nav-indicator mr-4 h-px w-8 bg-slate-600 transition-all group-hover:w-16 group-hover:bg-slate-200 group-focus-visible:w-16 group-focus-visible:bg-slate-200 motion-reduce:transition-none"></span>
+//                     <span className="nav-text text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-slate-200 group-focus-visible:text-slate-200">
+//                       About
+//                     </span>
+//                   </a>
+//                 </li>
+//                 <li>
+//                   <a
+//                     className="group flex items-center py-3"
+//                     href="#experience"
+//                   >
+//                     <span className="nav-indicator mr-4 h-px w-8 bg-slate-600 transition-all group-hover:w-16 group-hover:bg-slate-200 motion-reduce:transition-none"></span>
+//                     <span className="nav-text text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-slate-200">
+//                       Experience
+//                     </span>
+//                   </a>
+//                 </li>
+//                 <li>
+//                   <a className="group flex items-center py-3" href="#projects">
+//                     <span className="nav-indicator mr-4 h-px w-8 bg-slate-600 transition-all group-hover:w-16 group-hover:bg-slate-200 motion-reduce:transition-none"></span>
+//                     <span className="nav-text text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-slate-200">
+//                       Projects
+//                     </span>
+//                   </a>
+//                 </li>
+//               </ul>
+//             </nav>
+//           </div>
+
+//           {/* Social Links at the bottom of the sticky column */}
+//           <div className="ml-1 mt-8 flex items-center gap-5">
+//             {/* Add your GitHub / LinkedIn SVG Icons here */}
+//             <span className="text-xs text-slate-500">
+//               Social Links Placeholder
+//             </span>
+//           </div>
+//         </header>
+
+//         {/* RIGHT COLUMN: The Scrollable Content Sections */}
+//         <main id="content" className="pt-24 lg:w-1/2 lg:py-24">
+//           {/* ABOUT SECTION */}
+//           <section
+//             id="about"
+//             className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+//           >
+//             {/* <p className="mb-4">
+//               This is where your story goes. Talk about how you got into coding, your favorite tech stacks, and what kind of projects you love shipping.
+//             </p> */}
+
+//             <p className="mb-4">
+//               I’m a passionate full-stack developer focused on building modern,
+//               scalable, and impactful digital products. My journey into tech
+//               started from curiosity — turning ideas into real applications
+//               quickly became something I genuinely enjoyed. Over time, I’ve
+//               worked on projects ranging from real estate platforms and
+//               security-focused applications to real-time communication systems
+//               and SaaS products.
+//             </p>
+
+//             <p className="mb-4">
+//               I enjoy working with technologies like React, Next.js, Node.js,
+//               MongoDB, Firebase, and Socket.IO, with a strong focus on clean UI,
+//               performance, and smooth user experiences. What excites me most is
+//               solving real-world problems through software and shipping products
+//               people can actually use and benefit from.
+//             </p>
+
+//             <p>
+//               Beyond coding, I’m constantly learning, experimenting with new
+//               ideas, and pushing myself to grow as both a developer and product
+//               builder. I believe great software is not just about writing code —
+//               it’s about creating experiences that feel simple, useful, and
+//               memorable.
+//             </p>
+//           </section>
+
+//           {/* EXPERIENCE SECTION */}
+//           <section
+//             id="experience"
+//             className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+//           >
+//             {/* Use Shadcn Card components here later for individual jobs */}
+//             <div className="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50 mb-20">
+//               <header className="text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2">
+//                 2026 — Present
+//               </header>
+//               <div className="sm:col-span-6">
+//                 <h3 className="font-medium leading-snug text-slate-200">
+//                   <div>Junior Developer — Company Name</div>
+//                 </h3>
+//                 <p className="mt-2 text-sm leading-normal">
+//                   Building out modern web architecture, integrating multi-tenant
+//                   routing, and writing clean components.
+//                 </p>
+//               </div>
+//             </div>
+
+//             <div className="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50 mb-20">
+//               <header className="text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2">
+//                 2026 — Present
+//               </header>
+//               <div className="sm:col-span-6">
+//                 <h3 className="font-medium leading-snug text-slate-200">
+//                   <div>Junior Developer — Company Name</div>
+//                 </h3>
+//                 <p className="mt-2 text-sm leading-normal">
+//                   Building out modern web architecture, integrating multi-tenant
+//                   routing, and writing clean components.
+//                 </p>
+//               </div>
+//             </div>
+
+//             <div className="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50 mb-20">
+//               <header className="text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2">
+//                 2026 — Present
+//               </header>
+//               <div className="sm:col-span-6">
+//                 <h3 className="font-medium leading-snug text-slate-200">
+//                   <div>Junior Developer — Company Name</div>
+//                 </h3>
+//                 <p className="mt-2 text-sm leading-normal">
+//                   Building out modern web architecture, integrating multi-tenant
+//                   routing, and writing clean components.
+//                 </p>
+//               </div>
+//             </div>
+
+//           </section>
+
+//           {/* PROJECTS SECTION */}
+//           <section
+//             id="projects"
+//             className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+//           >
+//             <h2 className="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">
+//               Projects
+//             </h2>
+//             <div className="text-sm">
+//               Your awesome projects list will live here...
+//             </div>
+//           </section>
+//         </main>
+//       </div>
+//     </div>
+//   );
+// }
+
+// "use client";
+
+// import { useEffect, useState } from "react";
+
+// export default function Home() {
+//   // Store the ID of the section currently in view
+//   const [activeSection, setActiveSection] = useState("about");
+
+//   useEffect(() => {
+//     // 1. Grab all the content sections we want to track
+//     const sections = document.querySelectorAll("section[id]");
+
+//     // 2. Configure the observer options
+//     // rootMargin adjusting "-20% 0px -60% 0px" triggers the swap
+//     // exactly when the section enters the upper-middle region of the screen
+//     const options = {
+//       root: null,
+//       rootMargin: "-20% 0px -60% 0px",
+//       threshold: 0,
+//     };
+
+//     const observer = new IntersectionObserver((entries) => {
+//       entries.forEach((entry) => {
+//         if (entry.isIntersecting) {
+//           setActiveSection(entry.target.id);
+//         }
+//       });
+//     }, options);
+
+//     // 3. Start observing each section element
+//     sections.forEach((section) => observer.observe(section));
+
+//     // Cleanup observer connection when component unmounts
+//     return () => {
+//       sections.forEach((section) => observer.unobserve(section));
+//     };
+//   }, []);
+
+//   return (
+//     <div className="min-h-screen px-6 py-12 font-sans md:px-12 md:py-20 lg:px-24 lg:py-0 text-slate-400 bg-[#0f172a]">
+//       {/* Main Container turning into a 2-column layout on Desktop */}
+//       <div className="lg:flex lg:justify-between lg:gap-4">
+
+//         {/* LEFT COLUMN: Fixed/Sticky Header & Navigation */}
+//         <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24">
+//           <div>
+//             {/* Hero / Identity Intro */}
+//             <h1 className="text-4xl font-bold tracking-tight text-slate-200 sm:text-5xl">
+//               <a href="/">Your Name</a>
+//             </h1>
+//             <h2 className="mt-3 text-lg font-medium tracking-tight text-slate-200 sm:text-xl">
+//               Junior Full-Stack Developer
+//             </h2>
+//             <p className="mt-4 max-w-xs leading-normal text-sm">
+//               I build accessible, pixel-perfect digital products and web experiences.
+//             </p>
+
+//             {/* Sticky Sidebar Navigation */}
+//             <nav className="nav hidden lg:block mt-16">
+//               <ul className="w-max flex flex-col gap-2">
+
+//                 {/* LINK 1: ABOUT */}
+//                 <li>
+//                   <a className="group flex items-center py-3" href="#about">
+//                     <span
+//                       className={`mr-4 h-px transition-all duration-300 motion-reduce:transition-none ${
+//                         activeSection === "about"
+//                           ? "w-16 bg-slate-200"
+//                           : "w-8 bg-slate-600 group-hover:w-16 group-hover:bg-slate-200"
+//                       }`}
+//                     ></span>
+//                     <span
+//                       className={`font-bold uppercase tracking-widest transition-all duration-300 ${
+//                         activeSection === "about"
+//                           ? "text-sm text-slate-200 scale-105 origin-left"
+//                           : "text-xs text-slate-500 group-hover:text-slate-200"
+//                       }`}
+//                     ></span>
+//                       About
+//                   </a>
+//                 </li>
+
+//                 {/* LINK 2: EXPERIENCE */}
+//                 <li>
+//                   <a className="group flex items-center py-3" href="#experience">
+//                     <span
+//                       className={`mr-4 h-px transition-all duration-300 motion-reduce:transition-none ${
+//                         activeSection === "experience"
+//                           ? "w-16 bg-slate-200"
+//                           : "w-8 bg-slate-600 group-hover:w-16 group-hover:bg-slate-200"
+//                       }`}
+//                     ></span>
+//                     <span
+//                       className={`font-bold uppercase tracking-widest transition-all duration-300 ${
+//                         activeSection === "experience"
+//                           ? "text-sm text-slate-200 scale-105 origin-left"
+//                           : "text-xs text-slate-500 group-hover:text-slate-200"
+//                       }`}
+//                     ></span>
+//                       Experience
+//                   </a>
+//                 </li>
+
+//                 {/* LINK 3: PROJECTS */}
+//                 <li>
+//                   <a className="group flex items-center py-3" href="#projects">
+//                     <span
+//                       className={`mr-4 h-px transition-all duration-300 motion-reduce:transition-none ${
+//                         activeSection === "projects"
+//                           ? "w-16 bg-slate-200"
+//                           : "w-8 bg-slate-600 group-hover:w-16 group-hover:bg-slate-200"
+//                       }`}
+//                     ></span>
+//                     <span
+//                       className={`font-bold uppercase tracking-widest transition-all duration-300 ${
+//                         activeSection === "projects"
+//                           ? "text-sm text-slate-200 scale-105 origin-left"
+//                           : "text-xs text-slate-500 group-hover:text-slate-200"
+//                       }`}
+//                     ></span>
+//                       Projects
+//                   </a>
+//                 </li>
+
+//               </ul>
+//             </nav>
+//           </div>
+
+//           {/* Social Links at the bottom of the sticky column */}
+//           <div className="ml-1 mt-8 flex items-center gap-5">
+//             <span className="text-xs text-slate-500">
+//               Social Links Placeholder
+//             </span>
+//           </div>
+//         </header>
+
+//         {/* RIGHT COLUMN: The Scrollable Content Sections */}
+//         <main id="content" className="pt-24 lg:w-1/2 lg:py-24">
+
+//           {/* ABOUT SECTION */}
+//           <section
+//             id="about"
+//             className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+//           >
+//             <p className="mb-4">
+//               I’m a passionate full-stack developer focused on building modern,
+//               scalable, and impactful digital products. My journey into tech
+//               started from curiosity — turning ideas into real applications
+//               quickly became something I genuinely enjoyed. Over time, I’ve
+//               worked on projects ranging from real estate platforms and
+//               security-focused applications to real-time communication systems
+//               and SaaS products.
+//             </p>
+//             <p className="mb-4">
+//               I enjoy working with technologies like React, Next.js, Node.js,
+//               MongoDB, Firebase, and Socket.IO, with a strong focus on clean UI,
+//               performance, and smooth user experiences. What excites me most is
+//               solving real-world problems through software and shipping products
+//               people can actually use and benefit from.
+//             </p>
+//             <p>
+//               Beyond coding, I’m constantly learning, experimenting with new
+//               ideas, and pushing myself to grow as both a developer and product
+//               builder. I believe great software is not just about writing code —
+//               it’s about creating experiences that feel simple, useful, and
+//               memorable.
+//             </p>
+//           </section>
+
+//           {/* EXPERIENCE SECTION */}
+//           <section
+//             id="experience"
+//             className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+//           >
+//             <div className="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50 mb-20">
+//               <header className="text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2">
+//                 2026 — Present
+//               </header>
+//               <div className="sm:col-span-6">
+//                 <h3 className="font-medium leading-snug text-slate-200">
+//                   <div>Junior Developer — Company Name</div>
+//                 </h3>
+//                 <p className="mt-2 text-sm leading-normal">
+//                   Building out modern web architecture, integrating multi-tenant
+//                   routing, and writing clean components.
+//                 </p>
+//               </div>
+//             </div>
+
+//             <div className="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50 mb-20">
+//               <header className="text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2">
+//                 2026 — Present
+//               </header>
+//               <div className="sm:col-span-6">
+//                 <h3 className="font-medium leading-snug text-slate-200">
+//                   <div>Junior Developer — Company Name</div>
+//                 </h3>
+//                 <p className="mt-2 text-sm leading-normal">
+//                   Building out modern web architecture, integrating multi-tenant
+//                   routing, and writing clean components.
+//                 </p>
+//               </div>
+//             </div>
+
+//             <div className="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50 mb-20">
+//               <header className="text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2">
+//                 2026 — Present
+//               </header>
+//               <div className="sm:col-span-6">
+//                 <h3 className="font-medium leading-snug text-slate-200">
+//                   <div>Junior Developer — Company Name</div>
+//                 </h3>
+//                 <p className="mt-2 text-sm leading-normal">
+//                   Building out modern web architecture, integrating multi-tenant
+//                   routing, and writing clean components.
+//                 </p>
+//               </div>
+//             </div>
+//           </section>
+
+//           {/* PROJECTS SECTION */}
+//           <section
+//             id="projects"
+//             className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+//           >
+//             <h2 className="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">
+//               Projects
+//             </h2>
+//             <div className="text-sm">
+//               Your awesome projects list will live here...
+//             </div>
+//           </section>
+//         </main>
+//       </div>
+//     </div>
+//   );
+// }
+
+// "use client";
+
+// import { useEffect, useState } from "react";
+
+// export default function Home() {
+//   const [activeSection, setActiveSection] = useState("about");
+
+//   useEffect(() => {
+//     const sections = document.querySelectorAll("section[id]");
+//     const options = {
+//       root: null,
+//       rootMargin: "-20% 0px -60% 0px",
+//       threshold: 0,
+//     };
+
+//     const observer = new IntersectionObserver((entries) => {
+//       entries.forEach((entry) => {
+//         if (entry.isIntersecting) {
+//           setActiveSection(entry.target.id);
+//         }
+//       });
+//     }, options);
+
+//     sections.forEach((section) => observer.observe(section));
+//     return () => sections.forEach((section) => observer.unobserve(section));
+//   }, []);
+
+//   return (
+//     <div className="min-h-screen px-6 py-12 font-sans md:px-12 md:py-20 lg:px-24 lg:py-0 text-slate-400 bg-[#0f172a]">
+//       {/* Main Container turning into a 2-column layout on Desktop */}
+//       <div className="lg:flex lg:justify-between lg:gap-4">
+//         {/* LEFT COLUMN: Fixed/Sticky Header & Navigation */}
+//         <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24">
+//           <div>
+//             {/* Hero / Identity Intro */}
+//             <h1 className="text-4xl font-bold tracking-tight text-slate-200 sm:text-5xl">
+//               <a href="/">Your Name</a>
+//             </h1>
+//             <h2 className="mt-3 text-lg font-medium tracking-tight text-slate-200 sm:text-xl">
+//               Junior Full-Stack Developer
+//             </h2>
+//             <p className="mt-4 max-w-xs leading-normal text-sm">
+//               I build accessible, pixel-perfect digital products and web
+//               experiences.
+//             </p>
+
+//             {/* Sticky Sidebar Navigation (Hidden on mobile, active on desktop) */}
+//             {/* <nav className="nav hidden lg:block mt-16">
+//               <ul className="w-max flex flex-col gap-2">
+//                 <li>
+//                   <a className="group flex items-center py-3" href="#about">
+//                     <span
+//                       className={`mr-4 h-px transition-all duration-300 ${activeSection === "about" ? "w-16 bg-slate-200" : "w-8 bg-slate-600 group-hover:w-16 group-hover:bg-slate-200"}`}
+//                     ></span>
+//                     <span
+//                       className={`font-bold uppercase tracking-widest transition-all duration-300 ${activeSection === "about" ? "text-sm text-slate-200 scale-105 origin-left" : "text-xs text-slate-500 group-hover:text-slate-200"}`}
+//                     >
+//                       About
+//                     </span>
+//                   </a>
+//                 </li>
+//                 <li>
+//                   <a
+//                     className="group flex items-center py-3"
+//                     href="#experience"
+//                   >
+//                     <span
+//                       className={`mr-4 h-px transition-all duration-300 ${activeSection === "experience" ? "w-16 bg-slate-200" : "w-8 bg-slate-600 group-hover:w-16 group-hover:bg-slate-200"}`}
+//                     ></span>
+//                     <span
+//                       className={`font-bold uppercase tracking-widest transition-all duration-300 ${activeSection === "experience" ? "text-sm text-slate-200 scale-105 origin-left" : "text-xs text-slate-500 group-hover:text-slate-200"}`}
+//                     >
+//                       Experience
+//                     </span>
+//                   </a>
+//                 </li>
+//                 <li>
+//                   <a className="group flex items-center py-3" href="#projects">
+//                     <span
+//                       className={`mr-4 h-px transition-all duration-300 ${activeSection === "projects" ? "w-16 bg-slate-200" : "w-8 bg-slate-600 group-hover:w-16 group-hover:bg-slate-200"}`}
+//                     ></span>
+//                     <span
+//                       className={`font-bold uppercase tracking-widest transition-all duration-300 ${activeSection === "projects" ? "text-sm text-slate-200 scale-105 origin-left" : "text-xs text-slate-500 group-hover:text-slate-200"}`}
+//                     >
+//                       Projects
+//                     </span>
+//                   </a>
+//                 </li>
+//               </ul>
+//             </nav> */}
+
+//             {/* Sticky Sidebar Navigation */}
+// <nav className="nav hidden lg:block mt-16">
+//   <ul className="w-max flex flex-col gap-2">
+
+//     {/* LINK 1: ABOUT */}
+//     <li>
+//       <a className="group flex items-center py-3 select-none" href="#about">
+//         <span
+//           className={`mr-4 h-px transition-all duration-300 will-change-[width] ${
+//             activeSection === "about"
+//               ? "w-16 bg-slate-200"
+//               : "w-8 bg-slate-600 group-hover:w-16 group-hover:bg-slate-200"
+//           }`}
+//         ></span>
+//         <span
+//           className={`text-xs font-bold uppercase tracking-widest transition-all duration-300 will-change-transform origin-left ${
+//             activeSection === "about"
+//               ? "text-slate-200 scale-110"
+//               : "text-slate-500 group-hover:text-slate-200 scale-100"
+//           }`}
+//         >
+//           About
+//         </span>
+//       </a>
+//     </li>
+
+//     {/* LINK 2: EXPERIENCE */}
+//     <li>
+//       <a className="group flex items-center py-3 select-none" href="#experience">
+//         <span
+//           className={`mr-4 h-px transition-all duration-300 will-change-[width] ${
+//             activeSection === "experience"
+//               ? "w-16 bg-slate-200"
+//               : "w-8 bg-slate-600 group-hover:w-16 group-hover:bg-slate-200"
+//           }`}
+//         ></span>
+//         <span
+//           className={`text-xs font-bold uppercase tracking-widest transition-all duration-300 will-change-transform origin-left ${
+//             activeSection === "experience"
+//               ? "text-slate-200 scale-110"
+//               : "text-slate-500 group-hover:text-slate-200 scale-100"
+//           }`}
+//         >
+//           Experience
+//         </span>
+//       </a>
+//     </li>
+
+//     {/* LINK 3: PROJECTS */}
+//     <li>
+//       <a className="group flex items-center py-3 select-none" href="#projects">
+//         <span
+//           className={`mr-4 h-px transition-all duration-300 will-change-[width] ${
+//             activeSection === "projects"
+//               ? "w-16 bg-slate-200"
+//               : "w-8 bg-slate-600 group-hover:w-16 group-hover:bg-slate-200"
+//           }`}
+//         ></span>
+//         <span
+//           className={`text-xs font-bold uppercase tracking-widest transition-all duration-300 will-change-transform origin-left ${
+//             activeSection === "projects"
+//               ? "text-slate-200 scale-110"
+//               : "text-slate-500 group-hover:text-slate-200 scale-100"
+//           }`}
+//         >
+//           Projects
+//         </span>
+//       </a>
+//     </li>
+
+//   </ul>
+// </nav>
+//           </div>
+
+//           <div className="ml-1 mt-8 flex items-center gap-5">
+//             <span className="text-xs text-slate-500">
+//               Social Links Placeholder
+//             </span>
+//           </div>
+//         </header>
+
+//         {/* RIGHT COLUMN: The Scrollable Content Sections */}
+//         <main id="content" className="pt-12 lg:w-1/2 lg:py-24">
+//           {/* ABOUT SECTION */}
+//           <section
+//             id="about"
+//             className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+//           >
+//             {/* EXACT MOBIlE STICKY HEADER MATCH */}
+//             <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-[#0f172a]/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-0 lg:w-auto lg:bg-transparent lg:px-0 lg:py-0 lg:backdrop-blur-none">
+//               <h2 className="text-sm font-bold uppercase tracking-widest text-slate-200 lg:hidden">
+//                 About
+//               </h2>
+//             </div>
+
+//             <div className="space-y-4">
+//               <p className="mb-4">
+//                 I’m a passionate full-stack developer focused on building
+//                 modern, scalable, and impactful digital products. My journey
+//                 into tech started from curiosity — turning ideas into real
+//                 applications quickly became something I genuinely enjoyed. Over
+//                 time, I’ve worked on projects ranging from real estate platforms
+//                 and security-focused applications to real-time communication
+//                 systems and SaaS products.
+//               </p>
+
+//               <p className="mb-4">
+//                 I enjoy working with technologies like React, Next.js, Node.js,
+//                 MongoDB, Firebase, and Socket.IO, with a strong focus on clean
+//                 UI, performance, and smooth user experiences. What excites me
+//                 most is solving real-world problems through software and
+//                 shipping products people can actually use and benefit from.
+//               </p>
+
+//               <p>
+//                 Beyond coding, I’m constantly learning, experimenting with new
+//                 ideas, and pushing myself to grow as both a developer and
+//                 product builder. I believe great software is not just about
+//                 writing code — it’s about creating experiences that feel simple,
+//                 useful, and memorable.
+//               </p>
+//               <p>
+//                 I’m a passionate full-stack developer focused on building
+//                 modern, scalable, and impactful digital products...
+//               </p>
+//               <p>
+//                 I enjoy working with technologies like React, Next.js, Node.js,
+//                 MongoDB, Firebase, and Socket.IO...
+//               </p>
+//             </div>
+//           </section>
+
+//           {/* EXPERIENCE SECTION */}
+//           <section
+//             id="experience"
+//             className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+//           >
+//             {/* EXACT MOBIlE STICKY HEADER MATCH */}
+//             <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-[#0f172a]/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-0 lg:w-auto lg:bg-transparent lg:px-0 lg:py-0 lg:backdrop-blur-none">
+//               <h2 className="text-sm font-bold uppercase tracking-widest text-slate-200 lg:hidden">
+//                 Experience
+//               </h2>
+//             </div>
+
+//             <div className="space-y-20">
+//               {/* <div className="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 mb-20">
+//                 <header className="text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2">
+//                   2026 — Present
+//                 </header>
+//                 <div className="sm:col-span-6">
+//                   <h3 className="font-medium leading-snug text-slate-200">
+//                     Junior Developer
+//                   </h3>
+//                   <p className="mt-2 text-sm leading-normal">
+//                     Building out modern web architecture, integrating
+//                     multi-tenant routing...
+//                   </p>
+//                 </div>
+//               </div> */}
+//               <div className="border group relative mb-16 grid border-b border-slate-800/60 pb-8 transition-all sm:grid-cols-8 sm:gap-8 md:gap-6">
+
+//   {/* Date */}
+//   <header className="text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2 mt-0.5">
+//     2026 — Present
+//   </header>
+
+//   {/* Content */}
+//   <div className="sm:col-span-6">
+
+//     {/* Role + Company */}
+//     <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
+//       <h3 className="text-base font-semibold leading-snug text-slate-100">
+//         Junior Developer
+//       </h3>
+
+//       <span className="text-sm font-medium text-slate-400">
+//         Freelance / Remote
+//       </span>
+//     </div>
+
+//     {/* Description */}
+//     <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-400">
+//       Building modern web applications with scalable architectures,
+//       authentication systems, real-time features, and responsive user
+//       experiences across multiple projects and platforms.
+//     </p>
+
+//     {/* Tech Stack */}
+//     <div className="mt-4 flex flex-wrap gap-2">
+//       <span className="rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300">
+//         Next.js
+//       </span>
+
+//       <span className="rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300">
+//         TypeScript
+//       </span>
+
+//       <span className="rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300">
+//         MongoDB
+//       </span>
+
+//       <span className="rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300">
+//         Firebase
+//       </span>
+//     </div>
+//   </div>
+// </div>
+//               <div className="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 mb-20">
+//                 <header className="text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2">
+//                   2026 — Present
+//                 </header>
+//                 <div className="sm:col-span-6">
+//                   <h3 className="font-medium leading-snug text-slate-200">
+//                     Junior Developer
+//                   </h3>
+//                   <p className="mt-2 text-sm leading-normal">
+//                     Building out modern web architecture, integrating
+//                     multi-tenant routing...
+//                   </p>
+//                 </div>
+//               </div>
+//               <div className="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 mb-20">
+//                 <header className="text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2">
+//                   2026 — Present
+//                 </header>
+//                 <div className="sm:col-span-6">
+//                   <h3 className="font-medium leading-snug text-slate-200">
+//                     Junior Developer
+//                   </h3>
+//                   <p className="mt-2 text-sm leading-normal">
+//                     Building out modern web architecture, integrating
+//                     multi-tenant routing...
+//                   </p>
+//                 </div>
+//               </div>
+//             </div>
+//           </section>
+
+//           {/* PROJECTS SECTION */}
+//           <section
+//             id="projects"
+//             className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+//           >
+//             {/* EXACT MOBIlE STICKY HEADER MATCH
+//             <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-[#0f172a]/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-0 lg:w-auto lg:bg-transparent lg:px-0 lg:py-0 lg:backdrop-blur-none">
+//               <h2 className="text-sm font-bold uppercase tracking-widest text-slate-200 lg:hidden">
+//                 Projects
+//               </h2>
+//             </div>
+
+//             <div className="text-sm">
+//               Your awesome projects list will live here...
+//             </div> */}
+
+//             {/* EXACT MOBILE STICKY HEADER MATCH */}
+//             <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-[#0f172a]/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-0 lg:w-auto lg:bg-transparent lg:px-0 lg:py-0 lg:backdrop-blur-none">
+//               <h2 className="text-sm font-bold uppercase tracking-widest text-slate-200 lg:hidden">
+//                 Projects
+//               </h2>
+//             </div>
+
+//             {/* <div className="space-y-6 text-sm">
+//               <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-5 transition hover:border-slate-700">
+//                 <h3 className="mb-2 text-base font-semibold text-slate-100">
+//                   CivicWatch
+//                 </h3>
+
+//                 <p className="mb-3 leading-relaxed text-slate-400">
+//                   A community-driven security platform that helps users report
+//                   incidents, track crime hotspots, and stay informed through
+//                   real-time safety updates and discussions.
+//                 </p>
+
+//                 <div className="flex flex-wrap gap-2 text-xs">
+//                   <span className="rounded-full bg-slate-800 px-3 py-1 text-slate-300">
+//                     Next.js
+//                   </span>
+//                   <span className="rounded-full bg-slate-800 px-3 py-1 text-slate-300">
+//                     MongoDB
+//                   </span>
+//                   <span className="rounded-full bg-slate-800 px-3 py-1 text-slate-300">
+//                     Firebase
+//                   </span>
+//                 </div>
+//               </div>
+
+//               <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-5 transition hover:border-slate-700">
+//                 <h3 className="mb-2 text-base font-semibold text-slate-100">
+//                   PropNetix
+//                 </h3>
+
+//                 <p className="mb-3 leading-relaxed text-slate-400">
+//                   A modern real estate platform built for property discovery,
+//                   listing management, and seamless user authentication with a
+//                   clean and responsive user experience.
+//                 </p>
+
+//                 <div className="flex flex-wrap gap-2 text-xs">
+//                   <span className="rounded-full bg-slate-800 px-3 py-1 text-slate-300">
+//                     React
+//                   </span>
+//                   <span className="rounded-full bg-slate-800 px-3 py-1 text-slate-300">
+//                     Node.js
+//                   </span>
+//                   <span className="rounded-full bg-slate-800 px-3 py-1 text-slate-300">
+//                     Firebase Auth
+//                   </span>
+//                 </div>
+//               </div>
+
+//               <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-5 transition hover:border-slate-700">
+//                 <h3 className="mb-2 text-base font-semibold text-slate-100">
+//                   Random Video Chat
+//                 </h3>
+
+//                 <p className="mb-3 leading-relaxed text-slate-400">
+//                   A real-time stranger video chat application inspired by
+//                   Omegle, featuring instant peer-to-peer connections, WebRTC
+//                   streaming, and live socket-based matchmaking.
+//                 </p>
+
+//                 <div className="flex flex-wrap gap-2 text-xs">
+//                   <span className="rounded-full bg-slate-800 px-3 py-1 text-slate-300">
+//                     WebRTC
+//                   </span>
+//                   <span className="rounded-full bg-slate-800 px-3 py-1 text-slate-300">
+//                     Socket.IO
+//                   </span>
+//                   <span className="rounded-full bg-slate-800 px-3 py-1 text-slate-300">
+//                     Express
+//                   </span>
+//                 </div>
+//               </div>
+//             </div> */}
+
+//             <div className="space-y-6 text-sm">
+//   {/* Project Card */}
+//   <div className="flex gap-4 rounded-xl border border-slate-800 bg-slate-900/40 p-5 transition hover:border-slate-700">
+
+//     {/* Mock Project Image */}
+//     <img
+//       src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=400&auto=format&fit=crop"
+//       alt="CivicWatch"
+//       className="h-24 w-24 rounded-lg object-cover"
+//     />
+
+//     {/* Project Content */}
+//     <div className="flex-1">
+//       <h3 className="mb-2 text-base font-semibold text-slate-100">
+//         CivicWatch
+//       </h3>
+
+//       <p className="mb-3 leading-relaxed text-slate-400">
+//         A community-driven security platform that helps users report incidents,
+//         track crime hotspots, and stay informed through real-time safety updates
+//         and discussions.
+//       </p>
+
+//       <div className="flex flex-wrap gap-2 text-xs">
+//         <span className="rounded-full bg-slate-800 px-3 py-1 text-slate-300">
+//           Next.js
+//         </span>
+//         <span className="rounded-full bg-slate-800 px-3 py-1 text-slate-300">
+//           MongoDB
+//         </span>
+//         <span className="rounded-full bg-slate-800 px-3 py-1 text-slate-300">
+//           Firebase
+//         </span>
+//       </div>
+//     </div>
+//   </div>
+
+//   {/* Project Card */}
+//   <div className="flex gap-4 rounded-xl border border-slate-800 bg-slate-900/40 p-5 transition hover:border-slate-700">
+
+//     <img
+//       src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=400&auto=format&fit=crop"
+//       alt="PropNetix"
+//       className="h-24 w-24 rounded-lg object-cover"
+//     />
+
+//     <div className="flex-1">
+//       <h3 className="mb-2 text-base font-semibold text-slate-100">
+//         PropNetix
+//       </h3>
+
+//       <p className="mb-3 leading-relaxed text-slate-400">
+//         A modern real estate platform focused on seamless property discovery,
+//         listings, and responsive user experiences.
+//       </p>
+
+//       <div className="flex flex-wrap gap-2 text-xs">
+//         <span className="rounded-full bg-slate-800 px-3 py-1 text-slate-300">
+//           React
+//         </span>
+//         <span className="rounded-full bg-slate-800 px-3 py-1 text-slate-300">
+//           Node.js
+//         </span>
+//         <span className="rounded-full bg-slate-800 px-3 py-1 text-slate-300">
+//           Firebase Auth
+//         </span>
+//       </div>
+//     </div>
+//   </div>
+
+//   {/* Project Card */}
+//   <div className="flex gap-4 rounded-xl border border-slate-800 bg-slate-900/40 p-5 transition hover:border-slate-700">
+
+//     <img
+//       src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=400&auto=format&fit=crop"
+//       alt="Random Chat"
+//       className="h-24 w-24 rounded-lg object-cover"
+//     />
+
+//     <div className="flex-1">
+//       <h3 className="mb-2 text-base font-semibold text-slate-100">
+//         Random Video Chat
+//       </h3>
+
+//       <p className="mb-3 leading-relaxed text-slate-400">
+//         A real-time stranger video chat application with instant peer-to-peer
+//         connections and live matchmaking functionality.
+//       </p>
+
+//       <div className="flex flex-wrap gap-2 text-xs">
+//         <span className="rounded-full bg-slate-800 px-3 py-1 text-slate-300">
+//           WebRTC
+//         </span>
+//         <span className="rounded-full bg-slate-800 px-3 py-1 text-slate-300">
+//           Socket.IO
+//         </span>
+//         <span className="rounded-full bg-slate-800 px-3 py-1 text-slate-300">
+//           Express
+//         </span>
+//       </div>
+//     </div>
+//   </div>
+// </div>
+//           </section>
+//         </main>
+//       </div>
+//     </div>
+//   );
+// }
+
+// "use client";
+
+// import { useEffect, useState } from "react";
+
+// export default function Home() {
+//   const [activeSection, setActiveSection] = useState("about");
+
+//   useEffect(() => {
+//     const sections = document.querySelectorAll("section[id]");
+//     const options = {
+//       root: null,
+//       rootMargin: "-20% 0px -60% 0px",
+//       threshold: 0,
+//     };
+
+//     const observer = new IntersectionObserver((entries) => {
+//       entries.forEach((entry) => {
+//         if (entry.isIntersecting) {
+//           setActiveSection(entry.target.id);
+//         }
+//       });
+//     }, options);
+
+//     sections.forEach((section) => observer.observe(section));
+//     return () => sections.forEach((section) => observer.unobserve(section));
+//   }, []);
+
+//   return (
+//     // Clean white background with charcoal text for better readability than pure black
+//     <div className="min-h-screen px-6 py-12 font-sans md:px-12 md:py-20 lg:px-24 lg:py-0 text-zinc-600 bg-white selection:bg-zinc-900 selection:text-white">
+//       {/* Main Container turning into a 2-column layout on Desktop */}
+//       <div className="lg:flex lg:justify-between lg:gap-4">
+
+//         {/* LEFT COLUMN: Fixed/Sticky Header & Navigation */}
+//         <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24">
+//           <div>
+//             {/* Hero / Identity Intro */}
+//             <h1 className="text-4xl font-extrabold tracking-tight text-zinc-900 sm:text-5xl">
+//               <a href="/">Your Name</a>
+//             </h1>
+//             <h2 className="mt-3 text-lg font-medium tracking-tight text-zinc-800 sm:text-xl">
+//               Junior Full-Stack Developer
+//             </h2>
+//             <p className="mt-4 max-w-xs leading-normal text-sm text-zinc-500">
+//               I build accessible, pixel-perfect digital products and web experiences.
+//             </p>
+
+//             {/* Sticky Sidebar Navigation */}
+//             <nav className="nav hidden lg:block mt-16">
+//               <ul className="w-max flex flex-col gap-2">
+
+//                 {/* LINK 1: ABOUT */}
+//                 <li>
+//                   <a className="group flex items-center py-3 select-none" href="#about">
+//                     <span
+//                       className={`mr-4 h-px transition-all duration-300 will-change-[width] ${
+//                         activeSection === "about"
+//                           ? "w-16 bg-zinc-950"
+//                           : "w-8 bg-zinc-300 group-hover:w-16 group-hover:bg-zinc-950"
+//                       }`}
+//                     ></span>
+//                     <span
+//                       className={`text-xs font-bold uppercase tracking-widest transition-all duration-300 will-change-transform origin-left ${
+//                         activeSection === "about"
+//                           ? "text-zinc-950 scale-110"
+//                           : "text-zinc-400 group-hover:text-zinc-950 scale-100"
+//                       }`}
+//                     >
+//                       About
+//                     </span>
+//                   </a>
+//                 </li>
+
+//                 {/* LINK 2: EXPERIENCE */}
+//                 <li>
+//                   <a className="group flex items-center py-3 select-none" href="#experience">
+//                     <span
+//                       className={`mr-4 h-px transition-all duration-300 will-change-[width] ${
+//                         activeSection === "experience"
+//                           ? "w-16 bg-zinc-950"
+//                           : "w-8 bg-zinc-300 group-hover:w-16 group-hover:bg-zinc-950"
+//                       }`}
+//                     ></span>
+//                     <span
+//                       className={`text-xs font-bold uppercase tracking-widest transition-all duration-300 will-change-transform origin-left ${
+//                         activeSection === "experience"
+//                           ? "text-zinc-950 scale-110"
+//                           : "text-zinc-400 group-hover:text-zinc-950 scale-100"
+//                       }`}
+//                     >
+//                       Experience
+//                     </span>
+//                   </a>
+//                 </li>
+
+//                 {/* LINK 3: PROJECTS */}
+//                 <li>
+//                   <a className="group flex items-center py-3 select-none" href="#projects">
+//                     <span
+//                       className={`mr-4 h-px transition-all duration-300 will-change-[width] ${
+//                         activeSection === "projects"
+//                           ? "w-16 bg-zinc-950"
+//                           : "w-8 bg-zinc-300 group-hover:w-16 group-hover:bg-zinc-950"
+//                       }`}
+//                     ></span>
+//                     <span
+//                       className={`text-xs font-bold uppercase tracking-widest transition-all duration-300 will-change-transform origin-left ${
+//                         activeSection === "projects"
+//                           ? "text-zinc-950 scale-110"
+//                           : "text-zinc-400 group-hover:text-zinc-950 scale-100"
+//                       }`}
+//                     >
+//                       Projects
+//                     </span>
+//                   </a>
+//                 </li>
+
+//               </ul>
+//             </nav>
+//           </div>
+
+//           <div className="ml-1 mt-8 flex items-center gap-5">
+//             <span className="text-xs text-zinc-400">Social Links Placeholder</span>
+//           </div>
+//         </header>
+
+//         {/* RIGHT COLUMN: The Scrollable Content Sections */}
+//         <main id="content" className="pt-12 lg:w-1/2 lg:py-24">
+
+//           {/* ABOUT SECTION */}
+//           <section id="about" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24">
+//             {/* Pure white backdrop-blur sticky header for mobile */}
+//             <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-white/80 px-6 py-5 backdrop-blur-md md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-0 lg:w-auto lg:bg-transparent lg:px-0 lg:py-0 lg:backdrop-blur-none">
+//               <h2 className="text-sm font-bold uppercase tracking-widest text-zinc-950 lg:hidden">About</h2>
+//             </div>
+//             <div className="space-y-4 text-sm leading-relaxed text-zinc-600">
+//               <p>I’m a passionate full-stack developer focused on building modern, scalable, and impactful digital products...</p>
+//             </div>
+//           </section>
+
+//           {/* EXPERIENCE SECTION */}
+//           <section id="experience" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24">
+//             <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-white/80 px-6 py-5 backdrop-blur-md md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-0 lg:w-auto lg:bg-transparent lg:px-0 lg:py-0 lg:backdrop-blur-none">
+//               <h2 className="text-sm font-bold uppercase tracking-widest text-zinc-950 lg:hidden">Experience</h2>
+//             </div>
+
+//             {/* Minimalist List Layout with clean bottom border separation */}
+//             <div className="space-y-12">
+//               <div className="group relative grid pb-6 border-b border-zinc-100 sm:grid-cols-8 sm:gap-8 md:gap-4 transition-colors duration-300 hover:bg-zinc-50/50 -mx-4 px-4 rounded-lg">
+//                 <header className="text-xs font-semibold uppercase tracking-wide text-zinc-400 sm:col-span-2 pt-1">2026 — Present</header>
+//                 <div className="sm:col-span-6">
+//                   <h3 className="font-bold leading-snug text-zinc-950">Junior Developer — Firm</h3>
+//                   <p className="mt-2 text-sm leading-relaxed text-zinc-600">Building out modern web architecture, integrating multi-tenant routing, and writing clean components.</p>
+//                 </div>
+//               </div>
+//             </div>
+//           </section>
+
+//           {/* PROJECTS SECTION */}
+//           <section id="projects" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24">
+//             <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-white/80 px-6 py-5 backdrop-blur-md md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-0 lg:w-auto lg:bg-transparent lg:px-0 lg:py-0 lg:backdrop-blur-none">
+//               <h2 className="text-sm font-bold uppercase tracking-widest text-zinc-950 lg:hidden">Projects</h2>
+//             </div>
+//             <div className="text-sm text-zinc-600">Your awesome projects list will live here...</div>
+//           </section>
+
+//         </main>
+//       </div>
+//     </div>
+//   );
+// }
