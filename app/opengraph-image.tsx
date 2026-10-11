@@ -30,7 +30,7 @@ export default function Image() {
             }}
           />
           <div style={{ fontSize: 84, fontWeight: 700, letterSpacing: -2 }}>
-            CAMPUS CONNECT
+            Connect For Fun
           </div>
         </div>
         <div style={{ fontSize: 36, color: "#a3a3a3" }}>

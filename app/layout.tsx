@@ -14,7 +14,7 @@ const siteUrl =
     ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
     : "http://localhost:3000");
 
-const title = "Campus Connect";
+const title = "Connect For Fun";
 const description =
   "Meet someone new on video in one tap. No sign-up, no downloads. 18+";
 
