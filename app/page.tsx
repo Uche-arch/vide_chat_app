@@ -463,6 +463,7 @@ import {
   Flashlight,
   FlashlightOff,
   Menu,
+  PhoneOff,
   X,
 } from "lucide-react";
 
@@ -763,6 +764,10 @@ export default function Home() {
     else if (!isSearching) findStranger();
   }
 
+  function endCall() {
+    window.location.reload();
+  }
+
   const dock = (
     <div
       className={`${glass} items-center gap-1.5 rounded-full p-2 animate-in fade-in zoom-in-95 slide-in-from-bottom-3 duration-200 ${
@@ -788,17 +793,11 @@ export default function Home() {
           <Video className="h-5 w-5" />
         )}
       </DockButton>
-      {/* 
-      <DockButton
-        onClick={() => setTheme(isDark ? "light" : "dark")}
-        title={isDark ? "Light mode" : "Dark mode"}
-      >
-        {isDark ? (
-          <FlashlightOff className="h-5 w-5" />
-        ) : (
-          <Flashlight className="h-5 w-5" />
-        )}
-      </DockButton> */}
+      {isConnected && (
+        <DockButton onClick={endCall} active title="End call">
+          <PhoneOff className="h-5 w-5" />
+        </DockButton>
+      )}
 
       <div className="mx-1 h-6 w-px bg-white/30 dark:bg-white/15" />
 
@@ -867,7 +866,7 @@ export default function Home() {
             {isSearching
               ? "Finding someone…"
               : status === "Stranger left"
-                ? "Stranger left"
+                ? "They left"
                 : "Ready when you are"}
           </p>
         </div>
